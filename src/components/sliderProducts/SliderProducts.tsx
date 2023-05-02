@@ -10,6 +10,7 @@ import {
 import { Colors } from "../../styles";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import styled from "@emotion/styled";
+import {Link} from "react-router-dom"
 
 interface Item {
   id: number;
@@ -47,7 +48,18 @@ const SliderProducts = ({
       controlsStrategy="alternate"
     >
       {itemsArr.map(({ id, image, text, price, description }) => (
-        <AnimatedCard key={id} style={{ width: "300px" }}>
+        <Card
+          key={id}
+          sx={{
+            width: "300px",
+            transition: "transform 0.2s ease-out",
+            "&:hover": {
+              transform: "scale(1.05)",
+            },
+          }}
+          component={Link}
+          to={`/product/${text}`}
+        >
           <CardMedia
             component="img"
             image={image}
@@ -83,7 +95,7 @@ const SliderProducts = ({
               </Button>
             </CardContent>
           )}
-        </AnimatedCard>
+        </Card>
       ))}
     </AliceCarousel>
   );

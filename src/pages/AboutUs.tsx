@@ -6,10 +6,10 @@ import OurTeam from "../components/ourTeam";
 export default function AboutUs() {
   return (
     <>
-      <NavBar />
+    
       <AboutUsDescription />
       <OurTeam/>
-      <Footer />
+    
     </>
   );
 }

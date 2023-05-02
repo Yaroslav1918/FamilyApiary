@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Button, Grid, List, ListItem, Typography } from "@mui/material";
 import Container from "../container";
 import { Colors } from "../../styles";
 import ListProducts from "../listProducts";
 import { products } from "../../helpers/data";
+
 
 const categories = [
   { id: "1", name: "Honey" },
@@ -27,7 +28,6 @@ export default function Shop() {
           sx={{
             backgroundImage: "url(/images/beeShop.jpg)",
             backgroundSize: "cover",
-            borderRadius: "2%",
             backgroundPosition: "right 35% top 35%;",
             height: "40vh",
             display: "flex",
@@ -95,7 +95,7 @@ export default function Shop() {
             >
               Showing all results {filteredProducts.length}
             </Typography>
-            <ListProducts products={filteredProducts} />
+            <ListProducts products={filteredProducts}  />
           </Grid>
         </Grid>
       </Container>

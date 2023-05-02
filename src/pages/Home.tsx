@@ -6,21 +6,16 @@ import OurGallery from "../components/ourGallery";
 import TypesHoney from "../components/typesHoney";
 import Footer from "../components/footer";
 import NavBar from "../components/navBar";
-import Shop from "../components/shop/Shop";
-import HoneyCard from "../components/honeyCard/HoneyCard";
 
 const Home = () => {
   return (
     <>
-      <NavBar />
-      {/* <Shop/> */}
-      <HoneyCard/>
-      {/* <Hero />
+       <Hero />
       <OurMission />
       <OurProducts />
       <OurGallery />
-      <TypesHoney /> */}
-      <Footer />
+      <TypesHoney /> 
+   
     </>
   );
 };

@@ -2,89 +2,87 @@ import * as React from "react";
 import { ShoppingBasket, Menu } from "@mui/icons-material";
 import {
   Box,
-  Button,
   Toolbar,
-  ListItemText,
-  ListItemButton,
-  ListItem,
   List,
   Drawer,
   IconButton,
   AppBar,
-  Divider,
   Badge,
+  Typography,
 } from "@mui/material";
 
 import styled from "@emotion/styled";
 import { Colors } from "../../styles";
 import Logo from "../Logo";
+import MenuList from "../menuList";
+import { Link } from "react-router-dom";
+import { routes } from "../../routes/config";
+const { signIn, signUp, contactUs } = routes;
 
-interface Props {
-  window?: () => Window;
-}
+
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
 });
-const StyledButton = styled(Button)({
-  color: Colors.white,
-  backgroundColor: Colors.warning,
-  padding: "10px 37px",
-  textDecoration: "none",
-  borderRadius: "5px",
-  "&:hover": {
-    backgroundColor: Colors.warningDark,
-  },
-});
-const navItems = ["Home", "Pages", "Products", "Blog", "Portfolio"];
 
-export default function NavBar (props: Props) {
-  const { window } = props;
+interface NavItem {
+  label: string;
+  options?: string[];
+}
+
+const navItems: NavItem[] = [
+  { label: "Home" },
+  { label: "Pages", options: ["About us", "Contact us"] },
+  { label: "Products", options: ["Shop list"] },
+  { label: "Blog", options: ["News", "Tips", "Tutorials"] },
+  { label: "Portfolio", options: ["Gallery"] },
+];
+
+export default function NavBar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+    setMobileOpen((prev) => !prev);
   };
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
+    <List sx={{ display: "flex", flexDirection: "column" }}>
+      {navItems.map(
+        (item) =>
+          item.options && (
+            <MenuList
+              item={item.label}
+              options={item.options}
+              key={item.label}
+              onClick={handleDrawerToggle}
+            />
+          )
+      )}
+    </List>
   );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
-    <AppBar position="sticky" >
+    <AppBar position="sticky">
       <StyledToolbar>
-        <Logo/>
-        <Box sx={{ display: { md: "block", xs: "none" } }}>
-          {navItems.map((item) => (
-            <Button key={item} sx={{ color: "inherit", fontSize: {xs: "14px", lg: "16px"} }}>
-              {item}
-            </Button>
-          ))}
+        <Logo />
+        <Box sx={{ display: { md: "flex", xs: "none" } }}>
+          {navItems.map(
+            (item) =>
+              item.options && (
+                <MenuList
+                  item={item.label}
+                  options={item.options}
+                  key={item.label}
+                />
+              )
+          )}
         </Box>
         <Box
           component="nav"
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
           <Drawer
-            container={container}
-            variant="temporary"
             open={mobileOpen}
-            onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               display: { xs: "block", md: "none" },
@@ -104,12 +102,49 @@ export default function NavBar (props: Props) {
         >
           <ShoppingBasket />
         </Badge>
-        <StyledButton
-          variant="text"
-          sx={{ display: { md: "block", xs: "none" } }}
+        <Box>
+          <Typography
+            component={Link}
+            to={signIn.path}
+            sx={{
+              color: Colors.black,
+              textDecoration: "none",
+              marginRight: "5px",
+            }}
+          >
+            Login
+          </Typography>
+          /
+          <Typography
+            component={Link}
+            to={signUp.path}
+            sx={{
+              color: Colors.black,
+              textDecoration: "none",
+              marginLeft: "5px",
+            }}
+          >
+            Sign Up
+          </Typography>
+        </Box>
+
+        <Typography
+          component={Link}
+          to={contactUs.path}
+          sx={{
+            display: { xs: "none", md: "block" },
+            color: Colors.white,
+            backgroundColor: Colors.warning,
+            padding: "10px 37px",
+            textDecoration: "none",
+            borderRadius: "5px",
+            "&:hover": {
+              backgroundColor: Colors.warningDark,
+            },
+          }}
         >
           Contact
-        </StyledButton>
+        </Typography>
         <IconButton
           color="inherit"
           aria-label="open drawer"

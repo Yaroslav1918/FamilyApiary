@@ -1,6 +1,7 @@
 import { List, Typography } from "@mui/material";
 import ItemProducts from "../itemProducts";
 import { Colors } from "../../styles";
+
 interface Product {
   id: number;
   image: string;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function ListProducts({ products }: Props) {
+
   return (
     <List
       sx={{
@@ -25,9 +27,8 @@ export default function ListProducts({ products }: Props) {
         padding: "20px",
       }}
     >
-      
-      {products.map(({ image, text, price }) => (
-        <ItemProducts image={image} price={price} text={text} />
+      {products.map(({ image, text, price, id }) => (
+        <ItemProducts key={id} image={image} price={price} text={text}  />
       ))}
     </List>
   );

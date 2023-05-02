@@ -54,7 +54,7 @@ const OurGallery = () => {
   ];
 
   return (
-    <Box component="section" pt={10}>
+    <Box component="section" pt={10} pb={10}>
       <Container>
         <Box component="div">
           <Typography
