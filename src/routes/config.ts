@@ -1,48 +1,53 @@
+
 export const routes = {
   home: {
     id: 1,
-    title: "Home",
+    titleEn: 'Home',
+    titleUk: 'Головна',
     path: "/",
   },
   aboutUs: {
     id: 2,
-    title: "About us",
+    titleEn: 'About us',
+    titleUk: 'Про нас',
     path: "/aboutUs",
   },
 
   contactUs: {
     id: 3,
-    title: "Contact us",
+    titleEn: 'Contact us',
+    titleUk: 'Контакти',
     path: "/contactUs",
   },
   shop: {
     id: 4,
-    title: "Shop list",
+    titleEn: 'Shop List',
+    titleUk: 'Список товарів',
     path: "/shop",
   },
   ourGallery: {
     id: 4,
-    title: "Gallery",
+    titleEn: 'Gallery',
+    titleUk: 'Галерея',
     path: "/ourGallery",
   },
   signUp: {
     id: 5,
-    title: "Sign up",
+    titleEn: "Sign up",
+    titleUk: 'Реєстрація',
     path: "/signUp",
   },
   signIn: {
     id: 6,
-    title: "Sign in",
+    titleEn: "Sign in",
+    titleUk: 'Логін',
     path: "/signIn",
   },
-  verificate: {
-    id: 6,
-    title: "Verification",
-    path: "api/users/verify",
-  },
-  OAuth: {
+  cart: {
     id: 7,
-    title: "OAuth",
-    path: "api/users/oauth",
+    titleEn:  "Cart",
+    titleUk: 'Продукт',
+    path: "/cart",
   },
+ 
 };

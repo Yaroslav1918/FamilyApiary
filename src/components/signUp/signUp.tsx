@@ -3,10 +3,13 @@ import { Formik, Field, Form, FormikHelpers } from 'formik';
 import "react-app-polyfill/ie11";
 import Container from '../container/Container';
 import { Colors } from "../../styles";
+import { useAppDispatch, useAppSelector } from "../../helpers/hooks";
+import operations from "../../redux/auth/auth-operations";
+import { Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type FormValues = {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   password: string;
 };
@@ -25,9 +28,11 @@ const textFieldStyles = {
 };
 
 export default function SignUp() {
+  const dispatch = useAppDispatch()
+const {t} = useTranslation() 
+  const isLoggedIn = useAppSelector(item =>item.auth.isLoggedIn)
     const initialValues = {
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
       password: "",
     };
@@ -36,10 +41,9 @@ export default function SignUp() {
      values: FormValues,
      { setSubmitting,  resetForm }: FormikHelpers<FormValues>
    ) => {
-       console.log(values);
-       resetForm();
-       alert(JSON.stringify(values, null, 2));
-       setSubmitting(false);
+    dispatch(operations.register(values));
+  resetForm();
+  setSubmitting(false);
    };
     return (
       <Box
@@ -58,7 +62,7 @@ export default function SignUp() {
               color: Colors.muted,
             }}
           >
-            Sign up
+            {t("signUp")}
           </Typography>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ isSubmitting, resetForm }) => (
@@ -72,8 +76,8 @@ export default function SignUp() {
               >
                 <Field
                   as={TextField}
-                  label="First Name"
-                  name="firstName"
+                  label={t("name")}
+                  name="name"
                   variant="outlined"
                   margin="normal"
                   InputLabelProps={{
@@ -84,19 +88,7 @@ export default function SignUp() {
 
                 <Field
                   as={TextField}
-                  label="Last Name"
-                  name="lastName"
-                  variant="outlined"
-                  margin="normal"
-                  InputLabelProps={{
-                    style: { color: Colors.black },
-                  }}
-                  sx={textFieldStyles}
-                />
-
-                <Field
-                  as={TextField}
-                  label="Email"
+                  label={t("email")}
                   name="email"
                   variant="outlined"
                   margin="normal"
@@ -108,7 +100,7 @@ export default function SignUp() {
 
                 <Field
                   as={TextField}
-                  label="Password"
+                  label={t("password")}
                   name="password"
                   type="password"
                   variant="outlined"
@@ -126,12 +118,14 @@ export default function SignUp() {
                   disabled={isSubmitting}
                   sx={{ marginTop: "16px", background: Colors.muted }}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit"}
+                  {isSubmitting ? t("submitting") : t("submit")}
                 </Button>
               </Form>
             )}
           </Formik>
+          {isLoggedIn && <Navigate to="/shop" replace={true} />}
         </Container>
       </Box>
+     
     );
 };

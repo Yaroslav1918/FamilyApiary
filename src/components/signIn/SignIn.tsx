@@ -3,6 +3,9 @@ import { Formik, Field, Form, FormikHelpers } from "formik";
 import "react-app-polyfill/ie11";
 import Container from "../container/Container";
 import { Colors } from "../../styles";
+import operations from "../../redux/auth/auth-operations";
+import { useAppDispatch, useAppSelector } from "../../helpers/hooks";
+import { Navigate } from "react-router-dom";
 
 type FormValues = {
   email: string;
@@ -21,20 +24,21 @@ const textFieldStyles = {
     },
   },
 };
+const initialValues = {
+  email: "",
+  password: "",
+};
+
 
 export default function SignIn() {
-  const initialValues = {
-    email: "",
-    password: "",
-  };
-
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector(item =>item.auth.isLoggedIn)
   const onSubmit = (
     values: FormValues,
     { setSubmitting, resetForm }: FormikHelpers<FormValues>
   ) => {
-    console.log(values);
+    dispatch(operations.logIn(values));
     resetForm();
-    alert(JSON.stringify(values, null, 2));
     setSubmitting(false);
   };
   return (
@@ -44,6 +48,7 @@ export default function SignIn() {
         padding: "30px 0 100px",
       }}
     >
+        {isLoggedIn && <Navigate to="/shop" replace={true} />}
       <Container>
         <Typography
           component="h3"

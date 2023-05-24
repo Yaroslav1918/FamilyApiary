@@ -1,9 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import Container from "../container/Container";
 import SliderProducts from "../sliderProducts";
-import { products } from "../../helpers/data";
 import { SxProps } from "@mui/system";
 import { Theme } from "@mui/material/styles";
+import { useTranslation } from 'react-i18next';
+import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
 
 type OurProductsProps = {
   sx?: SxProps<Theme>;
@@ -11,8 +12,10 @@ type OurProductsProps = {
 
 
 export default function OurProducts({ sx }: OurProductsProps) {
+  const {t} = useTranslation()
+  const products = GetTranslatedItemsArray()
   return (
-    <Box component="section" sx={{ paddingTop: "30px", ...sx }}>
+    <Box component="section" sx={{ paddingTop: "90px", ...sx }}>
       <Container>
         <Box component="div">
           <Typography
@@ -23,18 +26,19 @@ export default function OurProducts({ sx }: OurProductsProps) {
               textAlign: "center",
             }}
           >
-            Our products
+            {t("ourProducts")}
           </Typography>
           <Box
             component="p"
             sx={{
+              
               fontSize: { md: 20, xs: 15, sm: 19 },
               fontWeight: "500",
               mb: 5,
+              textAlign: "center"
             }}
           >
-            Check out our online shop for cute bee-themed apparel, unique bee
-            suits, educational tools, gift certificates and more.
+            {t("productsDesk")}
           </Box>
         </Box>
         <SliderProducts itemsArr={products} addContent />

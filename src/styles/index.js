@@ -18,7 +18,9 @@ export const Colors = {
   dove_gray: "#d5d5d5",
   body_bg: "#F7F3F0",
   white: "#fff",
+  bgFooter: "#FCD5CD",
   black: "#45423E",
+  svg: "#ff8e31"
 };
 
 // TODO: define overrides object to create theme

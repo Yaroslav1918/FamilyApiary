@@ -2,9 +2,11 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { Colors } from "../../styles";
 import Container from "../container/Container";
 import {useState} from "react"
+import { useTranslation } from "react-i18next";
 
 
 export default function ContactDescription() {
+  const { t } = useTranslation();
      const [formData, setFormData] = useState({
        name: "",
        email: "",
@@ -14,7 +16,6 @@ export default function ContactDescription() {
 
      const handleSubmit = (event: { preventDefault: () => void; }) => {
        event.preventDefault();
-       console.log(formData); // replace this with your own form submission logic
        setFormData({
          name: "",
          email: "",
@@ -54,7 +55,7 @@ export default function ContactDescription() {
               bottom: "10%",
             }}
           >
-            Contact us
+            {t("contactUs")}
           </Typography>
         </Box>
         <Grid
@@ -73,7 +74,7 @@ export default function ContactDescription() {
             <TextField
               required
               fullWidth
-              label="Your Name"
+              label= {t("name")}
               margin="normal"
               name="name"
               value={formData.name}
@@ -82,7 +83,7 @@ export default function ContactDescription() {
             <TextField
               required
               fullWidth
-              label="Email"
+              label={t("email")}
               margin="normal"
               type="email"
               name="email"
@@ -91,7 +92,7 @@ export default function ContactDescription() {
             />
             <TextField
               fullWidth
-              label="Phone Number"
+              label={t("phoneNumber")}  
               margin="normal"
               type="tel"
               name="phone"
@@ -100,7 +101,7 @@ export default function ContactDescription() {
             />
             <TextField
               fullWidth
-              label="Message"
+              label={t("message")} 
               margin="normal"
               multiline
               rows={6}
@@ -122,7 +123,7 @@ export default function ContactDescription() {
                 },
               }}
             >
-              Submit
+              {t("submit")}
             </Button>
           </Grid>
           <Grid

@@ -10,15 +10,20 @@ import {
   Badge,
   Typography,
 } from "@mui/material";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 import styled from "@emotion/styled";
 import { Colors } from "../../styles";
 import Logo from "../Logo";
 import MenuList from "../menuList";
 import { Link } from "react-router-dom";
 import { routes } from "../../routes/config";
-const { signIn, signUp, contactUs } = routes;
-
+import CartButton from "../CartButton";
+import { useAppSelector } from "../../helpers/hooks";
+import UserMenu from "../userMenu/UserMenu";
+import LngSwitcher from "../lngSwitcher/LngSwitcher";
+import { useTranslation } from "react-i18next";
+import AuthList from "../authList/AuthList";
+const { contactUs } = routes;
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -30,34 +35,37 @@ interface NavItem {
   options?: string[];
 }
 
-const navItems: NavItem[] = [
-  { label: "Home" },
-  { label: "Pages", options: ["About us", "Contact us"] },
-  { label: "Products", options: ["Shop list"] },
-  { label: "Blog", options: ["News", "Tips", "Tutorials"] },
-  { label: "Portfolio", options: ["Gallery"] },
-];
-
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const { t } = useTranslation();
+  const showAuthList = useMediaQuery("(min-width:500px)");
   const handleDrawerToggle = () => {
     setMobileOpen((prev) => !prev);
   };
+  const navItems: NavItem[] = [
+    { label: t("home") },
+    { label: t("pages"), options: [t("aboutUs"), t("contactUS")] },
+    { label: t("products"), options: [t("shopList")] },
+    { label: t("portfolio"), options: [t("gallery")] },
+  ];
   const drawer = (
-    <List sx={{ display: "flex", flexDirection: "column" }}>
-      {navItems.map(
-        (item) =>
-          item.options && (
-            <MenuList
-              item={item.label}
-              options={item.options}
-              key={item.label}
-              onClick={handleDrawerToggle}
-            />
-          )
-      )}
-    </List>
+    <>
+      <List sx={{ display: "flex", flexDirection: "column" }}>
+        {navItems.map(
+          (item) =>
+            item.options && (
+              <MenuList
+                item={item.label}
+                options={item.options}
+                key={item.label}
+                onClick={handleDrawerToggle}
+              />
+            )
+        )}
+      </List>
+      {!showAuthList && <AuthList onCloseMenu={handleDrawerToggle} />}
+    </>
   );
   return (
     <AppBar position="sticky">
@@ -89,43 +97,27 @@ export default function NavBar() {
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 width: "240px",
+                alignItems: "center",
               },
             }}
           >
             {drawer}
           </Drawer>
         </Box>
-        <Badge
-          badgeContent={4}
-          color="error"
-          sx={{ display: { md: "block", xs: "none" } }}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <ShoppingBasket />
-        </Badge>
-        <Box>
-          <Typography
-            component={Link}
-            to={signIn.path}
-            sx={{
-              color: Colors.black,
-              textDecoration: "none",
-              marginRight: "5px",
-            }}
-          >
-            Login
-          </Typography>
-          /
-          <Typography
-            component={Link}
-            to={signUp.path}
-            sx={{
-              color: Colors.black,
-              textDecoration: "none",
-              marginLeft: "5px",
-            }}
-          >
-            Sign Up
-          </Typography>
+          <CartButton />
+          <LngSwitcher />
+          {isLoggedIn ? (
+            <UserMenu />
+          ) : (
+            <Box>{showAuthList && <AuthList />}</Box>
+          )}
         </Box>
 
         <Typography
@@ -143,7 +135,7 @@ export default function NavBar() {
             },
           }}
         >
-          Contact
+          {t("contact")}
         </Typography>
         <IconButton
           color="inherit"

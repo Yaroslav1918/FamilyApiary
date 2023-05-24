@@ -1,58 +1,43 @@
 import { Box, Grid, Typography } from "@mui/material";
 import Container from "../container/Container";
+import { useTranslation } from 'react-i18next';
 
 export default function OurMission() {
+  const {t} = useTranslation()
   return (
-    <Box component="section" pt={10}>
+    <Box component="section" pt={1}>
       <Container>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} sx ={{display: "flex", alignItems: "center", justifyContent: "center"}}>
           <Grid item xs={12} md={6}>
             <Box
               component="img"
-              sx={{ width: "100%", display: "block", margin: "0 auto" }}
+              sx={{ width: "100%", display: "block", margin: "0 auto", borderRadius: "3px" }}
               alt="The house from the offer."
-              src="https://freepngimg.com/thumb/honey/37317-3-honey-transparent-image.png"
+              src="/images/ourGallery/apiaryPhoto3.jpg"
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Box component="div" textAlign="center">
+            <Box component="div" >
               <Typography
                 component="h3"
                 mt={3}
                 sx={{
+                  textAlign:"center",
                   fontSize: { md: 40, xs: 20, sm: 30 },
                   fontWeight: "600",
                 }}
               >
-                Our mission
+                {t("ourMission")}
               </Typography>
               <Box
                 component="p"
                 sx={{
-                  fontSize: { md: 20, xs: 17, sm: 19 },
+                  fontSize: { md: 25, xs: 17, sm: 19 },
                   fontWeight: "500",
                   my: 4,
                 }}
               >
-                Our mission is to produce the finest quality honey and bee
-                products, while promoting sustainable and responsible beekeeping
-                practices that prioritize the health and wellbeing of our
-                honeybees and the environment. We believe in the importance of
-                preserving traditional methods of beekeeping and sharing our
-                passion for the natural and delicious products that bees provide
-                us with.
-              </Box>
-              <Box
-                component="p"
-                sx={{
-                  fontSize: { md: 20, xs: 17, sm: 19 },
-                  fontWeight: "500",
-                  my: 4,
-                }}
-              >
-                Our hope is that these backyard hives will facilitate a dialogue
-                among neighbours, friends, family and the community at large
-                about the huge importance of bees.
+                {t("deskMision")}
               </Box>
             </Box>
           </Grid>

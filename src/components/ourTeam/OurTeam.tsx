@@ -1,7 +1,9 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, CardMedia } from "@mui/material";
 import Container from "../container";
 import { Colors } from "../../styles";
 import SliderProducts from "../sliderProducts";
+import { useTranslation } from 'react-i18next';
+
 const itemsArr = [
   {
     id: 1,
@@ -17,11 +19,12 @@ const itemsArr = [
   },
   {
     id: 4,
-    image: "/images/me.jpg",
+    image: "/images/ourGallery/fatherPhoto3.jpg",
   },
 ];
 
 export default function OurTeam() {
+  const { t } = useTranslation();
     return (
       <Box component="section" sx={{ padding: "50px 0" }}>
         <Container>
@@ -33,14 +36,14 @@ export default function OurTeam() {
               fontWeight: "700",
             }}
           >
-            OUR TEAM OF EXPERTS
+             {t("ourTeam")}  
           </Typography>
           <Box
             component="p"
             mt={5}
             sx={{ fontSize: { xs: 14, md: 20, sm: 17 }, textAlign: "center" }}
           >
-            Meet our passionate team of honey production professionals.
+            {t("meet")} 
           </Box>
           <SliderProducts itemsArr={itemsArr} />
         </Container>

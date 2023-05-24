@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { routes } from "./config"
 import Home from "../pages/Home";
@@ -11,21 +11,29 @@ import OurGallery from "../components/ourGallery";
 import HoneyCard from "../components/honeyCard";
 import SignUp from "../components/signUp";
 import SignIn from "../components/signIn/SignIn";
+import CartPage from "../pages/CartPage";
+import { useTranslation } from 'react-i18next';
+import { AnimatePresence } from "framer-motion";
+
+import { TransitionGroup } from 'react-transition-group';
 const {
   home,
   aboutUs,
-  verificate,
-  OAuth,
   contactUs,
   shop,
   ourGallery,
   signUp,
   signIn,
+  cart,
 } = routes;
 const RoutesComponent = () => {
+  const { t } = useTranslation();
+  const location = useLocation()
+  
   return (
     <Suspense fallback={<Spinner />}>
-      <Routes>
+      <AnimatePresence>
+      <Routes location ={location} key ={location.pathname}>
         {/* PUBLIC */}
         <Route path={home.path} element={<Home />} />
         <Route path={aboutUs.path} element={<AboutUs />} />
@@ -33,15 +41,15 @@ const RoutesComponent = () => {
         <Route path={shop.path} element={<Shop />} />
         <Route path={ourGallery.path} element={<OurGallery />} />
         <Route path={signUp.path} element={<SignUp />} />
+        <Route path={cart.path} element={<CartPage />} />
         <Route path={signIn.path} element={<SignIn />} />
-        <Route path={`${verificate.path}/:token`} element={null} />
-        <Route path={`${OAuth.path}/:token`} element={null} />
-        <Route path="/product/:name" element={<HoneyCard />} />
-
+        <Route path={`/${t('product')}/:name`} element={<HoneyCard />} />
+       
         {/* NOT AUTH */}
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      </AnimatePresence>
     </Suspense>
   );
 };

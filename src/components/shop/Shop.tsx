@@ -3,21 +3,26 @@ import { Box, Button, Grid, List, ListItem, Typography } from "@mui/material";
 import Container from "../container";
 import { Colors } from "../../styles";
 import ListProducts from "../listProducts";
-import { products } from "../../helpers/data";
+import { useAppSelector } from "../../helpers/hooks";
+import { useTranslation } from 'react-i18next';
+import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
 
 
-const categories = [
-  { id: "1", name: "Honey" },
-  { id: "2", name: "Beekeeping product" },
-];
 
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const products = GetTranslatedItemsArray()
+  const {t} = useTranslation()
 
+  const categories = [
+    { id: "1", name: t("honey") },
+    { id: "2", name: t("beProduc") },
+  ];
+  
   const filteredProducts =
     selectedCategory === ""
       ? products
-      : products.filter((product) => product.category === selectedCategory);
+      : products.filter(({ category }) => category === selectedCategory);
   return (
     <Box
       component="section"
@@ -47,7 +52,7 @@ export default function Shop() {
             bottom: "10%",
           }}
         >
-         Shop
+       {t("shop")}
         </Typography>
         </Box>
 
@@ -60,7 +65,8 @@ export default function Shop() {
                 fontWeight: "600",
               }}
             >
-              CATEGORIES
+               {t("categories")}
+              
             </Typography>
             <List>
               {categories.map((category) => (
@@ -93,7 +99,7 @@ export default function Shop() {
                 fontSize: { xs: "17px", md: "23px" },
               }}
             >
-              Showing all results {filteredProducts.length}
+              {t("showAllRes")} {filteredProducts.length}
             </Typography>
             <ListProducts products={filteredProducts}  />
           </Grid>

@@ -1,17 +1,31 @@
-import { Box, Container, Grid, Link, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 import { Colors } from "../../styles";
 import Logo from "../Logo/Logo";
 import styled from "@emotion/styled";
 import SocialList from "../socialList/SocialList";
 import HiveIcon from "@mui/icons-material/Hive";
+import { useTranslation } from "react-i18next";
+import { routes } from "../../routes/config";
+import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
+const { contactUs, aboutUs } = routes;
 
 const StyledLink = styled(Link)({
   color: "inherit",
   fontSize: "19px",
   textDecoration: "none",
-  cursor: "pointer"
+  cursor: "pointer",
 });
 export default function Footer() {
+  const { t } = useTranslation();
+  const products = GetTranslatedItemsArray();
   return (
     <Box
       component="footer"
@@ -24,7 +38,7 @@ export default function Footer() {
         pt: 8,
         position: "relative",
         borderRadius: "1%",
-        textAlign: "center"
+        textAlign: "center",
       }}
     >
       <Container maxWidth="lg" sx={{ mb: -6 }}>
@@ -35,9 +49,8 @@ export default function Footer() {
             left: "50%",
             transform: "translate(-50%, -50%)",
             borderRadius: "70%",
-
             height: "90px",
-            bgcolor: "#FCD5CD",
+            bgcolor: Colors.bgFooter,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -48,42 +61,46 @@ export default function Footer() {
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
             <Typography variant="h5" sx={{ mb: 2 }}>
-              CONTACT INFO
+              {t("contactInfo")}
             </Typography>
             <Typography variant="body1" sx={{ mb: 2, fontSize: "19px" }}>
-              Veselovka, Kherson region, Ukraine, 75421
+              {t("address")}
               <br />
-              Phone: (555) 333-4422
+              {t("phone")}
               <br />
-              Email: bee@qodeinteractive.com
+              {t("emailF")}
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="h5" sx={{ mb: 2 }}>
-              PRODUCTS
+              {t("productF")}
             </Typography>
-            <Typography sx={{ mb: 2 }}>
-              <StyledLink>Sunflowers honey</StyledLink>
-              <br />
-              <StyledLink>Flowers honey</StyledLink>
-              <br />
-              <StyledLink>Buckwheat honey</StyledLink>
-            </Typography>
+
+            <List>
+              {products.map(({ text, id }) => (
+                <ListItem key ={id} sx ={{display: "flex", justifyContent:"center", alignItems: "center"}}>
+                  <StyledLink to={`/${t("product")}/${text}`}>
+                    {" "}
+                    {text}
+                  </StyledLink>
+                </ListItem>
+              ))}
+            </List>
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="h5" sx={{ mb: 2 }}>
-              OUR HIVE
+              {t("ourInfo")}
             </Typography>
             <Typography variant="body1" sx={{ mb: 2 }}>
-              <StyledLink>Our Story</StyledLink>
+              <StyledLink to={aboutUs.path}> {t("ourStory")}</StyledLink>
               <br />
-              <StyledLink>Our Retail Locations</StyledLink>
+              <StyledLink to={contactUs.path}> {t("ourLoc")}</StyledLink>
             </Typography>
           </Grid>
         </Grid>
         <Box sx={{ mt: 4 }}>
           <Typography variant="body2" align="center" sx={{ fontSize: "19px" }}>
-            Connect with us:
+            {t("connectWithUs")}
           </Typography>
           <SocialList />
           <HiveIcon
@@ -99,7 +116,7 @@ export default function Footer() {
             align="center"
             sx={{ fontSize: "15px", paddingBottom: "20px" }}
           >
-            © 2023 Qode Interactive All Rights Reserved
+            {t("rightsRes")}
           </Typography>
         </Box>
       </Container>

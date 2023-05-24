@@ -1,45 +1,63 @@
 import { Box, Grid, Typography } from "@mui/material";
-import styled from "@emotion/styled";
-import Button from "../button/Button";
+import {useState} from "react"
 import Container from "../container/Container";
-
-
-
+import ButtonStyled from "../buttonStyled/ButtonStyled";
+import { useTrail, useSpring, animated, AnimatedProps, easings  } from '@react-spring/web'
+import { useTranslation } from 'react-i18next';
+const AnimatedTypography = animated(Grid);
+interface AnimatedBoxProps extends AnimatedProps<typeof Box> {
+  alt: string;
+  src: string;
+  sx: object
+}
+const AnimatedBox = animated((props: AnimatedBoxProps) => <Box component="img" {...props} />);
 
 export default function Hero() {
+  const { t } = useTranslation();
+  const springsDescription = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 500 },
+    delay: 300,
+  });
+  const springsImg = useSpring({
+    from: { opacity: 0, x: 200 },
+    to: { opacity: 1, x: 100, },
+    config: { duration: 500 },
+    delay: 500,
+  });
+  
  return (
-   <Box component="section" pt={10}>
+   <Box component="section" pt={10} pb ={18}>
      <Container>
        <Grid
          container
          spacing={19}
          sx={{ alignItems: "center", justifyContent: "center" }}
        >
-         <Grid item xs={10} md={6} sx={{ justifyContent: { xs: "center" } }}>
+         <AnimatedTypography item xs={10} md={6} style={{ justifyContent: "center", ...springsDescription }}>
            <Box
              component="p"
-             sx={{ fontSize: { md: 23, xs: 17, sm: 21 }, fontWeight: "500" }}
+             sx={{ fontSize: { md: 29, xs: 17, sm: 25 }, fontWeight: "500" }}
            >
-             FRESH & SWEET AS HONEY.
+            {t('heroDesc')}
            </Box>
            <Typography
              component="h1"
-             sx={{ fontSize: { md: 70, xs: 30, sm: 40 }, fontWeight: "600" }}
+             sx={{ fontSize: { md: 50, xs: 25, sm: 35 }, fontWeight: "600" }}
            >
-             HONEYBEE
+             {t("title")}
            </Typography>
-           <Box component="p" sx={{ fontSize: { xs: 14, md: 20, sm: 17 } }}>
-             As a family-owned and operated apiary in Ukraine, we are dedicated
-             to bringing you the purest and most delicious honey and bee
-             products straight from the hive.
+           <Box component="p" sx={{ fontSize: { xs: 14, md: 30, sm: 26 } }}>
+            {t("descriptionHero")}
            </Box>
-           <Button text="View More" />
-         </Grid>
+           <ButtonStyled text={t("viewMore")} to = "/aboutUs" />
+         </AnimatedTypography>
          <Grid item xs={6} sx={{ display: { md: "block", xs: "none" } }}>
-           <Box
-             component="img"
-             sx={{ width: { lg: "500px", md: "400px" } }}
-             alt="The house from the offer."
+           <AnimatedBox
+             style={springsImg}
+             sx={{ width: { lg: "500px", md: "400px" }, transform: "none !important"  }}
+             alt="Honey."
              src="https://freepngimg.com/thumb/honey/37317-3-honey-transparent-image.png"
            />
          </Grid>

@@ -1,8 +1,10 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { Colors } from "../../styles";
 import Container from "../container/Container";
+import { useTranslation } from "react-i18next";
 
 export default function AboutUsDescription() {
+  const {t} = useTranslation();
   return (
     <Box
       component="section"
@@ -32,7 +34,7 @@ export default function AboutUsDescription() {
               bottom: "10%",
             }}
           >
-            About Us
+            {t("aboutUs")}
           </Typography>
         </Box>
 
@@ -50,9 +52,9 @@ export default function AboutUsDescription() {
               sx={{ fontSize: { xs: 20, sm: 25, md: 30 } }}
               mb={6}
             >
-              WHAT ARE{" "}
+            {t("whatHon")} {" "}
               <Box component="span" sx={{ color: Colors.orange }}>
-                HONEYBEES
+              {t("whatHoneyB")}  
               </Box>
             </Typography>
             <Box
@@ -60,7 +62,7 @@ export default function AboutUsDescription() {
               sx={{
                 width: { xs: "80%", md: "300px", lg: "400px" },
               }}
-              alt="The house from the offer."
+              alt={t("bee")}
               src="/images/imgBack.jpg"
             />
           </Grid>
@@ -76,10 +78,7 @@ export default function AboutUsDescription() {
               }}
               mb={5}
             >
-              Honeybees are a type of bee that are known for their ability to
-              produce honey. They are social insects that live in colonies or
-              hives, where each individual bee has a specific role to play in
-              maintaining the hive's health and productivity.
+             {t("beeMeaning")}
             </Box>
             <Box
               component="img"
@@ -90,11 +89,12 @@ export default function AboutUsDescription() {
                   lg: "300px",
                   borderRadius: "5%",
                 },
+                height: "400px",
                 mr: { xs: 0, lg: 10 },
               }}
              
-              alt="The house from the offer."
-              src="/images/bee.jpg"
+              alt="Apiary"
+              src="/images/ourGallery/apiary.jpg"
             />
             <Box
               component="img"
@@ -106,19 +106,16 @@ export default function AboutUsDescription() {
                   borderRadius: "5%",
                 },
               }}
-              alt="The house from the offer."
-              src="/images/bee.jpg"
+              alt="Apiary"
+              src="/images/ourGallery/fatherPhoto1.jpg"
             />
             <Box
               component="p"
               mt={5}
               sx={{ fontSize: { xs: 14, md: 20, sm: 17 } }}
             >
-              Honeybees are important pollinators and play a critical role in
-              the reproduction of many plants, making them a vital part of many
-              ecosystems. In a family apiary, honeybees are kept and cared for
-              by beekeepers who work to maintain healthy hives and harvest honey
-              for consumption or sale.
+              
+             {t("beeMeaningSecond")}
             </Box>
           </Grid>
         </Grid>

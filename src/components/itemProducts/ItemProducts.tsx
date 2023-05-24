@@ -8,19 +8,40 @@ import {
 } from "@mui/material";
 import { Colors } from "../../styles";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../../redux/cart/cart_slice";
+import { useTranslation } from "react-i18next";
 
 interface ItemProductsProps {
+  id: number;
   image: string;
   text: string;
-  price: string;
+  price: number;
+  quantity: number;
 }
 
 export default function ItemProducts({
+  id,
   image,
   text,
   price,
+  quantity,
 }: ItemProductsProps) {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const onAddToCart = () => {
+    dispatch(
+      cartActions.addItemToCart({
+        id,
+        text,
+        image,
+        price,
+        quantity,
+        totalPrice: price * quantity,
+      })
+    );
+  };
   return (
     <ListItem
       sx={{
@@ -38,11 +59,10 @@ export default function ItemProducts({
             },
           },
         }}
-        component={Link}
-        to={`/product/${text}`}
       >
         <CardMedia
-          component="img"
+          component={Link}
+          to={`/${t('product')}/${text}`}
           image={image}
           sx={{
             height: "300px",
@@ -71,6 +91,7 @@ export default function ItemProducts({
             {price}
           </Typography>
           <Button
+            onClick={onAddToCart}
             sx={{
               color: Colors.black,
               fontSize: { xs: "15px", md: "17px" },
@@ -83,7 +104,7 @@ export default function ItemProducts({
             <ShoppingBasketIcon
               sx={{ fontSize: { xs: "14px", md: "17px" }, mr: 0.5 }}
             />
-            Add to cart
+            {t("addToCard")}
           </Button>
         </CardContent>
       </Card>

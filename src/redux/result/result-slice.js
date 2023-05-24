@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import operations from "./result-operations";
 
 const initialState = {
+  ProductItems: [],
   statsPlayer1: {
     won: 0,
     draw: 0,

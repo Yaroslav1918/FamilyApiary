@@ -53,8 +53,9 @@ export default function MenuList({ item, options, onClick }: MenuListProps) {
             component={Link}
             onClick={handleClose}
             to={
-              Object.values(routes).some((route) => route.title === option)
-                ? Object.values(routes).find((route) => route.title === option)
+              Object.values(routes).some((route) => route.titleEn === option || route.titleUk === option )
+            
+                ? Object.values(routes).find((route) => route.titleEn === option || route.titleUk === option)
                     ?.path || "/"
                 : "/"
             }
