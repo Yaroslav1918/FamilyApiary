@@ -17,7 +17,6 @@ import Container from "../container/Container";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../redux/cart/cart_slice";
 import React, { useState } from "react";
-import { useAppSelector } from "../../helpers/hooks";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useTranslation } from "react-i18next";

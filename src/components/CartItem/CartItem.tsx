@@ -14,8 +14,10 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Colors } from "../../styles";
 import { cartActions } from "../../redux/cart/cart_slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { removeItem } from "../../redux/cart/cart_operations";
+import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
 interface Item {
   id: number;
   image: string;
@@ -36,7 +38,7 @@ export default function CartItem({ items, hideContent, style }: Props) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const isMobileScreen = useMediaQuery("(max-width:539px)");
-
+  const isLoggedIn = useSelector(getIsLoggedIn);
   const cellStyle = {
     fontSize: isMobileScreen ? "12px" : "16px" 
   }
@@ -114,7 +116,10 @@ export default function CartItem({ items, hideContent, style }: Props) {
                   <TableCell>
                     <IconButton
                       onClick={() =>
-                        dispatch(cartActions.removeItemFromCart(id))
+                        isLoggedIn 
+                        ?  dispatch(removeItem(id))
+                        :  dispatch(cartActions.removeItemFromCart(id))
+                       
                       }
                     >
                       <DeleteIcon />

@@ -8,12 +8,18 @@ import { Colors } from "../../styles";
 import CartItem from "../CartItem";
 import { useAppSelector } from "../../helpers/hooks";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
 
 const { cart } = routes;
 const CartButton = () => {
   const totalQuantity = useAppSelector(
     (state) => state.cartItems.totalQuantity
   );
+  const totalQuantityAuth = useAppSelector(
+    (state) => state.product.totalQuantity
+  );
+  const isLoggedIn = useSelector(getIsLoggedIn);
   const items = useAppSelector((state) => state.cartItems.items);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const isDesktopScreen = useMediaQuery("(min-width: 1200px)");
@@ -35,7 +41,7 @@ const CartButton = () => {
   onMouseEnter={handlePopoverOpen}
   onMouseLeave={handlePopoverClose}
 >
-  <Badge showZero badgeContent={totalQuantity} color="error">
+  <Badge showZero badgeContent={isLoggedIn ? totalQuantityAuth : totalQuantity } color="error">
     <ShoppingBasket />
   </Badge>
   {isDesktopScreen && (

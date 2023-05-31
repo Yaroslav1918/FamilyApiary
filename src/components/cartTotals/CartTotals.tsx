@@ -12,15 +12,19 @@ import {
 } from "@mui/material";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalText from "../modalText";
 import { useTranslation } from "react-i18next";
 import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
+import { useAppDispatch } from "../../helpers/hooks";
+import { cartActions } from "../../redux/cart/cart_slice";
+
+
 
 export default function CartTotals() {
   const [openModal, setOpenModal] = useState(false);
   const productItems = useSelector((state: RootState) => state.cartItems.items);
-
+  const dispatch = useAppDispatch();
   const translatedItemsArray = GetTranslatedItemsArray();
   const { t } = useTranslation();
   const translatedItems = productItems.map((item) => {
@@ -51,6 +55,8 @@ export default function CartTotals() {
     setOpenModal(false);
   };
 
+
+  
   return (
     <Box width="100%" mx="auto" mt={4}>
       <Typography variant="h4" align="center" gutterBottom>
@@ -95,7 +101,12 @@ export default function CartTotals() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setOpenModal((prev) => !prev)}
+          onClick={() => {
+            setOpenModal((prev) => !prev);
+            setTimeout(() => {
+              dispatch(cartActions.resetToInitialState());
+            }, 1500);
+          }}
         >
           {t("placeOrder")}
         </Button>

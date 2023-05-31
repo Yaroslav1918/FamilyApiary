@@ -9,9 +9,15 @@ import {
 import { Colors } from "../../styles";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../redux/cart/cart_slice";
 import { useTranslation } from "react-i18next";
+
+import {
+  getProductsItems,
+} from "../../redux/cart/cart_selectors";
+import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
+import { addProducts } from "../../redux/authCart/authCart_operations";
 
 interface ItemProductsProps {
   id: number;
@@ -30,17 +36,25 @@ export default function ItemProducts({
 }: ItemProductsProps) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  const productsItems = useSelector(getProductsItems);
+
   const onAddToCart = () => {
-    dispatch(
-      cartActions.addItemToCart({
-        id,
-        text,
-        image,
-        price,
-        quantity,
-        totalPrice: price * quantity,
-      })
-    );
+    const cartItem = {
+      id,
+      text,
+      image,
+      price,
+      quantity,
+      totalPrice: price * quantity
+    };
+    
+   
+    isLoggedIn 
+      ?  dispatch(addProducts(cartItem))
+      : dispatch(
+          cartActions.addItemToCart(cartItem)
+        );
   };
   return (
     <ListItem
@@ -62,7 +76,7 @@ export default function ItemProducts({
       >
         <CardMedia
           component={Link}
-          to={`/${t('product')}/${text}`}
+          to={`/${t("product")}/${text}`}
           image={image}
           sx={{
             height: "300px",
@@ -88,7 +102,7 @@ export default function ItemProducts({
               fontSize: { xs: "17px", md: "20px" },
             }}
           >
-            {price}
+            {price} {t("currency")}
           </Typography>
           <Button
             onClick={onAddToCart}
@@ -102,9 +116,9 @@ export default function ItemProducts({
             }}
           >
             <ShoppingBasketIcon
-              sx={{ fontSize: { xs: "14px", md: "17px" }, mr: 0.5 }}
+              sx={{ fontSize: { xs: "14px", md: "17px" }, mr: 0.5 }} 
             />
-            {t("addToCard")}
+            {t("addToCard")} 
           </Button>
         </CardContent>
       </Card>

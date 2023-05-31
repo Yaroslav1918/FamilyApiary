@@ -83,18 +83,18 @@ export default function TypesHoney() {
                       overflow: "auto",
                       textOverflow: "ellipsis",
                       display: "-webkit-box",
-                      "-webkit-line-clamp": "3",
-                      "-webkit-box-orient": "vertical",
-                      scrollbarWidth: "thin", 
-                      scrollbarColor: "transparent transparent", 
+                      WebkitLineClamp: "3",
+                      WebkitBoxOrient: "vertical",
+                      scrollbarWidth: "thin",
+                      scrollbarColor: "transparent transparent",
                       "&::-webkit-scrollbar": {
-                        width: "6px", 
+                        width: "6px",
                       },
                       "&::-webkit-scrollbar-thumb": {
-                        background: "transparent", 
+                        background: "transparent",
                       },
                       "&::-webkit-scrollbar-track": {
-                        background: "transparent", 
+                        background: "transparent",
                       },
                     }}
                   >

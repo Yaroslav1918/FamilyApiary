@@ -59,7 +59,7 @@ const logIn = createAsyncThunk("/auth/login", async (credentials: LoginCredentia
 const logOut = createAsyncThunk("/auth/logout", async () => {
  
   try {
-    await axios.post("/api/auth/logout");
+    await axios.get("/api/auth/logout");
     token.unset();
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -74,17 +74,15 @@ const logOut = createAsyncThunk("/auth/logout", async () => {
 });
 
 const fetchCurrentUser = createAsyncThunk(
-  "auth/refresh",
-  async (_, thunkAPI) => {
-    const persistedToken  =   useAppSelector((state) => state.auth.token);  
-    // console.log("🚀 ~ file: auth-operations.ts:78 ~ persistedToken:", persistedToken)
-    // const state: any = thunkAPI.getState();
-    // const persistedToken = state.auth.token;
-    if (persistedToken === null) {
+  "auth/current",
+  async (_, thunkAPI) => { 
+    const { token} = (thunkAPI.getState() as { auth: any }).auth;
+   
+    if (token === null) {
       return thunkAPI.rejectWithValue("Token not found");
     }
 
-    token.set(persistedToken);
+    token.set(token);
     try {
       const { data } = await axios.get("/api/auth/current");
       return data;

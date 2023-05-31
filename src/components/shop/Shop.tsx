@@ -3,7 +3,6 @@ import { Box, Button, Grid, List, ListItem, Typography } from "@mui/material";
 import Container from "../container";
 import { Colors } from "../../styles";
 import ListProducts from "../listProducts";
-import { useAppSelector } from "../../helpers/hooks";
 import { useTranslation } from 'react-i18next';
 import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
 
@@ -69,22 +68,22 @@ export default function Shop() {
               
             </Typography>
             <List>
-              {categories.map((category) => (
-                <ListItem key={category.id} sx={{ padding: 0 }}>
+              {categories.map(({name, id }) => (
+                <ListItem key={id} sx={{ padding: 0 }}>
                   <Button
-                    onClick={() => setSelectedCategory(category.name)}
+                    onClick={() => setSelectedCategory(name)}
                     sx={{
                       fontSize: { md: 20, xs: 20 },
                       padding: 0,
                       color:
-                        category.name === selectedCategory
+                        name === selectedCategory
                           ? Colors.primary
                           : Colors.black,
                       fontWeight:
-                        category.name === selectedCategory ? "bold" : "normal",
+                        name === selectedCategory ? "bold" : "normal",
                     }}
                   >
-                    {category.name}
+                    {name}
                   </Button>
                 </ListItem>
               ))}
