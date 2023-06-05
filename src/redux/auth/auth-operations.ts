@@ -9,7 +9,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { getSignupError, getSignupErrorEN } from "../../helpers/getTextError";
 
 const language = i18next.use(LanguageDetector);
-axios.defaults.baseURL = "http://localhost:3038";
+axios.defaults.baseURL = "https://git.heroku.com/family-apiary.git";
 
 const token = {
   set(token: null | string ) {
