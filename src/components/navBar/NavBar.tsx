@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ShoppingBasket, Menu } from "@mui/icons-material";
+import { Menu } from "@mui/icons-material";
 import {
   Box,
   Toolbar,
@@ -7,7 +7,6 @@ import {
   Drawer,
   IconButton,
   AppBar,
-  Badge,
   Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";

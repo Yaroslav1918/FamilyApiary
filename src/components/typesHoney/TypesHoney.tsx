@@ -51,8 +51,10 @@ export default function TypesHoney() {
                   component="img"
                   width={200}
                   height="300"
+                  alt={text}
                   image={image}
                   sx={{ borderRadius: "5px", height: "auto" }}
+                  loading="lazy"
                 />
                 <Box
                   sx={{

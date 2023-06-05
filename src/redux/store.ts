@@ -21,6 +21,12 @@ const cartPersistConfig = {
   whitelist: ['items', 'totalQuantity'], 
 
 };
+const cartAuthPersistConfig = {
+  key: 'cartAuth',
+  storage: storage,
+  whitelist: ['items', 'totalQuantity'], 
+
+};
 
 
 

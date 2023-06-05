@@ -3,17 +3,16 @@ import Container from "../container/Container";
 import SliderProducts from "../sliderProducts";
 import { SxProps } from "@mui/system";
 import { Theme } from "@mui/material/styles";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
 
 type OurProductsProps = {
   sx?: SxProps<Theme>;
 };
 
-
 export default function OurProducts({ sx }: OurProductsProps) {
-  const {t} = useTranslation()
-  const products = GetTranslatedItemsArray()
+  const { t } = useTranslation();
+  const products = GetTranslatedItemsArray();
   return (
     <Box component="section" sx={{ paddingTop: "90px", ...sx }}>
       <Container>
@@ -31,11 +30,10 @@ export default function OurProducts({ sx }: OurProductsProps) {
           <Box
             component="p"
             sx={{
-              
               fontSize: { md: 20, xs: 15, sm: 19 },
               fontWeight: "500",
               mb: 5,
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             {t("productsDesk")}
@@ -45,4 +43,4 @@ export default function OurProducts({ sx }: OurProductsProps) {
       </Container>
     </Box>
   );
-};
+}

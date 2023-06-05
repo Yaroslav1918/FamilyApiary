@@ -12,12 +12,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../redux/cart/cart_slice";
 import { useTranslation } from "react-i18next";
-
-import {
-  getProductsItems,
-} from "../../redux/cart/cart_selectors";
 import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
-import { addProducts } from "../../redux/authCart/authCart_operations";
+import { addProducts } from "../../redux/cart/cart_operations";
 
 interface ItemProductsProps {
   id: number;
@@ -37,7 +33,6 @@ export default function ItemProducts({
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const isLoggedIn = useSelector(getIsLoggedIn);
-  const productsItems = useSelector(getProductsItems);
 
   const onAddToCart = () => {
     const cartItem = {
@@ -46,15 +41,12 @@ export default function ItemProducts({
       image,
       price,
       quantity,
-      totalPrice: price * quantity
+      totalPrice: price * quantity,
     };
-    
-   
-    isLoggedIn 
-      ?  dispatch(addProducts(cartItem))
-      : dispatch(
-          cartActions.addItemToCart(cartItem)
-        );
+
+    isLoggedIn
+      ? dispatch(addProducts(cartItem))
+      : dispatch(cartActions.addItemToCart(cartItem));
   };
   return (
     <ListItem
@@ -116,9 +108,9 @@ export default function ItemProducts({
             }}
           >
             <ShoppingBasketIcon
-              sx={{ fontSize: { xs: "14px", md: "17px" }, mr: 0.5 }} 
+              sx={{ fontSize: { xs: "14px", md: "17px" }, mr: 0.5 }}
             />
-            {t("addToCard")} 
+            {t("addToCard")}
           </Button>
         </CardContent>
       </Card>

@@ -3,12 +3,11 @@ import { createAsyncThunk,  } from '@reduxjs/toolkit';
 import axios from "axios"
 import { AxiosResponse } from 'axios';
 import { RootState } from '../store';
-import { createAction } from "@reduxjs/toolkit";
 import { CartAuthState, CartItem } from './authCart_slice';
 
 
-export const addProducts = createAsyncThunk(
-    "products/addProducts",
+export const addProductsAuth = createAsyncThunk(
+    "authProducts/addProductsAuth",
     async (product: CartItem, thunkAPI) => {
       const state = thunkAPI.getState() as RootState;
       try {
@@ -35,7 +34,6 @@ export const addProducts = createAsyncThunk(
           (total, item) => total + item.quantity,
           0
         );
-      console.log(state.product.totalQuantity)
        
         const { data } = await axios.post<any, AxiosResponse<CartAuthState>>("/api/products",  state.product );
       

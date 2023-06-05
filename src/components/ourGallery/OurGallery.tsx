@@ -1,14 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  Container,
-  Dialog,
-  DialogContent,
-  Typography,
-  useMediaQuery,
-  Modal,
-  Paper,
-} from "@mui/material";
+import { Box, Container, Typography, useMediaQuery } from "@mui/material";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { styled } from "@mui/material/styles";
@@ -91,7 +82,7 @@ const OurGallery = () => {
               textAlign: "center",
             }}
           >
-               {t("ourGallery")}  
+            {t("ourGallery")}
           </Typography>
           <Box
             component="p"
@@ -100,11 +91,14 @@ const OurGallery = () => {
               fontWeight: "500",
               mb: 5,
             }}
-          >   
-          {t("ourGalleryDesk")}  
+          >
+            {t("ourGalleryDesk")}
           </Box>
         </Box>
-        <ImageList cols={isSmallScreen ? 1 : 3} sx={{ mb: 4,  overflow: 'visible', }}>
+        <ImageList
+          cols={isSmallScreen ? 1 : 3}
+          sx={{ mb: 4, overflow: "visible" }}
+        >
           {itemData.map((item) => (
             <AnimatedImageListItem
               key={item.img}
@@ -119,7 +113,11 @@ const OurGallery = () => {
             </AnimatedImageListItem>
           ))}
         </ImageList>
-        <GalleryModal open={open} handleClose={handleCloseModal} selectedImage ={selectedImage}/>
+        <GalleryModal
+          open={open}
+          handleClose={handleCloseModal}
+          selectedImage={selectedImage}
+        />
       </Container>
     </Box>
   );

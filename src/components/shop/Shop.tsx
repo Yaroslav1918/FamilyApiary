@@ -3,30 +3,25 @@ import { Box, Button, Grid, List, ListItem, Typography } from "@mui/material";
 import Container from "../container";
 import { Colors } from "../../styles";
 import ListProducts from "../listProducts";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
-
-
 
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const products = GetTranslatedItemsArray()
-  const {t} = useTranslation()
+  const products = GetTranslatedItemsArray();
+  const { t } = useTranslation();
 
   const categories = [
     { id: "1", name: t("honey") },
     { id: "2", name: t("beProduc") },
   ];
-  
+
   const filteredProducts =
     selectedCategory === ""
       ? products
       : products.filter(({ category }) => category === selectedCategory);
   return (
-    <Box
-      component="section"
-      sx={{ background: Colors.body_bg, padding: "50px 0 100px" }}
-    >
+    <Box component="section" sx={{ padding: "50px 0 100px" }}>
       <Container>
         <Box
           sx={{
@@ -41,18 +36,18 @@ export default function Shop() {
             marginBottom: "70px",
           }}
         >
-         <Typography
-          variant="h1"
-          component="h2"
-          sx={{
-            color: Colors.white,
-            fontSize: { md: 70, xs: 50, sm: 60 },
-            position: "absolute",
-            bottom: "10%",
-          }}
-        >
-       {t("shop")}
-        </Typography>
+          <Typography
+            variant="h1"
+            component="h2"
+            sx={{
+              color: Colors.white,
+              fontSize: { md: 70, xs: 50, sm: 60 },
+              position: "absolute",
+              bottom: "10%",
+            }}
+          >
+            {t("shop")}
+          </Typography>
         </Box>
 
         <Grid container spacing={2} sx={{ justifyContent: "center" }}>
@@ -64,11 +59,10 @@ export default function Shop() {
                 fontWeight: "600",
               }}
             >
-               {t("categories")}
-              
+              {t("categories")}
             </Typography>
             <List>
-              {categories.map(({name, id }) => (
+              {categories.map(({ name, id }) => (
                 <ListItem key={id} sx={{ padding: 0 }}>
                   <Button
                     onClick={() => setSelectedCategory(name)}
@@ -79,8 +73,7 @@ export default function Shop() {
                         name === selectedCategory
                           ? Colors.primary
                           : Colors.black,
-                      fontWeight:
-                        name === selectedCategory ? "bold" : "normal",
+                      fontWeight: name === selectedCategory ? "bold" : "normal",
                     }}
                   >
                     {name}
@@ -100,7 +93,7 @@ export default function Shop() {
             >
               {t("showAllRes")} {filteredProducts.length}
             </Typography>
-            <ListProducts products={filteredProducts}  />
+            <ListProducts products={filteredProducts} />
           </Grid>
         </Grid>
       </Container>

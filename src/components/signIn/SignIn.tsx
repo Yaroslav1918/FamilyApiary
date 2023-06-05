@@ -1,12 +1,18 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { Formik, Field, Form, FormikHelpers, ErrorMessage } from "formik";
 import "react-app-polyfill/ie11";
 import Container from "../container/Container";
 import { Colors } from "../../styles";
 import operations from "../../redux/auth/auth-operations";
 import { useAppDispatch, useAppSelector } from "../../helpers/hooks";
-import { Navigate } from "react-router-dom";
+import { cartActions } from "../../redux/cart/cart_slice";
+import { routes } from "../../routes/config";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { validate } from "../../helpers/validation/loginForm";
+import { useTranslation } from "react-i18next";
 
+const { shop } = routes;
 type FormValues = {
   email: string;
   password: string;
@@ -29,17 +35,45 @@ const initialValues = {
   password: "",
 };
 
-
 export default function SignIn() {
-  const dispatch = useAppDispatch()
-  const isLoggedIn = useAppSelector(item =>item.auth.isLoggedIn)
+  const [redirectToShop, setRedirectToShop] = useState(false);
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector((item) => item.auth.isLoggedIn);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  
+  useEffect(() => {
+    if (isLoggedIn && redirectToShop) {
+      navigate(shop.path, { replace: true });
+    }
+  }, [isLoggedIn, redirectToShop, navigate]);
+
+  const FieldErrorMessage = ({ fieldName }: { fieldName: string }) => {
+    return (
+      <ErrorMessage name={fieldName}>
+        {(errorMsg) => (
+          <Box
+            sx={{
+              color: Colors.danger,
+              fontSize: "14px",
+              margin: "0 auto",
+            }}
+          >
+            {errorMsg}
+          </Box>
+        )}
+      </ErrorMessage>
+    );
+  };
   const onSubmit = (
     values: FormValues,
     { setSubmitting, resetForm }: FormikHelpers<FormValues>
   ) => {
+    dispatch(cartActions.resetToInitialState());
     dispatch(operations.logIn(values));
     resetForm();
     setSubmitting(false);
+    setRedirectToShop(true);
   };
   return (
     <Box
@@ -48,7 +82,6 @@ export default function SignIn() {
         padding: "30px 0 100px",
       }}
     >
-        {isLoggedIn && <Navigate to="/shop" replace={true} />}
       <Container>
         <Typography
           component="h3"
@@ -59,9 +92,13 @@ export default function SignIn() {
             color: Colors.muted,
           }}
         >
-          Sign in
+          {t("login")}
         </Typography>
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validate={validate}
+        >
           {({ isSubmitting, resetForm }) => (
             <Form
               style={{
@@ -82,7 +119,7 @@ export default function SignIn() {
                 }}
                 sx={textFieldStyles}
               />
-
+              <FieldErrorMessage fieldName="email" />
               <Field
                 as={TextField}
                 label="Password"
@@ -95,7 +132,7 @@ export default function SignIn() {
                 }}
                 sx={textFieldStyles}
               />
-
+              <FieldErrorMessage fieldName="password" />
               <Button
                 type="submit"
                 variant="contained"
@@ -111,4 +148,7 @@ export default function SignIn() {
       </Container>
     </Box>
   );
+}
+function usesState(arg0: boolean): [any, any] {
+  throw new Error("Function not implemented.");
 }

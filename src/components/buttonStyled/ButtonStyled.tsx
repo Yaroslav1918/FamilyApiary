@@ -1,19 +1,13 @@
 import { Colors } from "../../styles";
-import {
-  Button 
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { Link } from "react-router-dom";
-
-
 
 interface ButtonProps {
   text: string;
   to: string;
   sx?: SxProps;
 }
-
-
 
 const ButtonStyled = ({ text, to, sx }: ButtonProps) => {
   return (

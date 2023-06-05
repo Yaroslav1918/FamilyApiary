@@ -44,7 +44,6 @@ export default function MenuList({ item, options, onClick }: MenuListProps) {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
-    
       >
         {options.map((option: string) => (
           <MenuItem
@@ -53,13 +52,16 @@ export default function MenuList({ item, options, onClick }: MenuListProps) {
             component={Link}
             onClick={handleClose}
             to={
-              Object.values(routes).some((route) => route.titleEn === option || route.titleUk === option )
-            
-                ? Object.values(routes).find((route) => route.titleEn === option || route.titleUk === option)
-                    ?.path || "/"
+              Object.values(routes).some(
+                (route) => route.titleEn === option || route.titleUk === option
+              )
+                ? Object.values(routes).find(
+                    (route) =>
+                      route.titleEn === option || route.titleUk === option
+                  )?.path || "/"
                 : "/"
             }
-            disableRipple 
+            disableRipple
           >
             {option}
           </MenuItem>

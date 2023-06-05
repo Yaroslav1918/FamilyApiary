@@ -3,8 +3,8 @@ import { SxProps } from "@mui/system";
 import { ReactNode } from "react";
 
 type ContainerProps = {
-  children: ReactNode,
-  sx?: SxProps,
+  children: ReactNode;
+  sx?: SxProps;
 };
 
 export default function Container({ children, sx }: ContainerProps) {

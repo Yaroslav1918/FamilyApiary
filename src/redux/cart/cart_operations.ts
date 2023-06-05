@@ -24,46 +24,60 @@ interface CartItem {
   }
   
  ;
-  // export const addProducts = createAsyncThunk(
-  //   "products/addProducts",
-  //   async (product: CartItem, thunkAPI) => {
-  //     const state = thunkAPI.getState() as RootState;
-  //     try {
-        
-  //       const { id, price, quantity, image, totalPrice, text } = product;
-  //       const newItem = {
-  //         id,
-  //         image,
-  //         text,
-  //         quantity,
-  //         price,
-  //         totalPrice
-  //       };
-  
-  //       const isIncludeItem = state.cartItems.items.find((item) => item.id === id);
-  
-  //       if (!isIncludeItem) {
-  //         state.cartItems.items = [...state.cartItems.items, newItem];
-  //       } else {
-  //         isIncludeItem.quantity++;
-  //         isIncludeItem.totalPrice += price;
-  //       }
-  //     console.log(state.cartItems.totalQuantity)
-       
-  //       const { data } = await axios.post<any, AxiosResponse<CartState>>("/api/products",  state.cartItems );
-      
-  //       return data;
-  //     } catch (error: any) {
-  //       return thunkAPI.rejectWithValue(error.message);
-  //     }
-  //   }
-  // );
+ export const addProducts = createAsyncThunk(
+  "products/addProducts",
+  async (product: CartItem, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    try {
+      const { id, price, quantity, image, totalPrice, text } = product;
+      const newItem = {
+        id,
+        image,
+        text,
+        quantity,
+        price,
+        totalPrice
+      };
+
+      const isIncludeItem = state.cartItems.items.find((item) => item.id === id);
+
+      let updatedItems = [];
+      if (!isIncludeItem) {
+        updatedItems = [...state.cartItems.items, newItem];
+      } else {
+        updatedItems = state.cartItems.items.map((item) => {
+          if (item.id === id) {
+            return {
+              ...item,
+              quantity: item.quantity + quantity,
+              totalPrice: item.totalPrice + totalPrice
+            };
+          }
+          return item;
+        });
+      }
+
+      const updatedTotalQuantity = state.cartItems.totalQuantity + quantity;
+
+      const updatedCartItems = {
+        items: updatedItems,
+        totalQuantity: updatedTotalQuantity
+      };
+
+      const { data } = await axios.post<any, AxiosResponse<CartState>>("/api/products", updatedCartItems);
+
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
   export const removeItem = createAsyncThunk(
     "products/deleteProducts",
     async (id: number, thunkAPI) => {
       try {
-        const { data } = await axios.delete<any, AxiosResponse<CartItem>>(`/api/products/${id}`);
-        console.log("🚀 ~ file: cart_operations.ts:67 ~ data:", data)
+        const { data } = await axios.delete<any, AxiosResponse<any>>(`/api/products/${id}`);
         return data;
       
       } catch (error: any) {
@@ -71,19 +85,11 @@ interface CartItem {
       }
     }
   );
-export const getProducts = createAsyncThunk<
-  // Return type of the async action
-  string,
-  // The type of the argument passed to the async action (not used in this case)
-  void,
-  {
-    rejectValue: string;
-  }
->(
+export const getProducts = createAsyncThunk(
   "products/getProducts",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get<any, AxiosResponse<string>>("/api/products");
+      const { data } = await axios.get<any, AxiosResponse<any>>("/api/products");
       return data;
     } catch (error :any) {
       return rejectWithValue(error.message);

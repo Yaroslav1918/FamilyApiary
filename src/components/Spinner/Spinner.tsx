@@ -8,8 +8,8 @@ const override = {
   borderColor: "red",
 };
 const Spinner = () => {
-     let [loading, setLoading] = useState(true);
-     let [color, setColor] = useState("#ffffff");
+  let [loading, setLoading] = useState(true);
+  let [color, setColor] = useState("#ffffff");
   return (
     <Box
       component="div"

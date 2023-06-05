@@ -4,7 +4,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "../store";
 import { useAppSelector } from "../../helpers/hooks";
+import i18next from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import { getSignupError, getSignupErrorEN } from "../../helpers/getTextError";
 
+const language = i18next.use(LanguageDetector);
 axios.defaults.baseURL = "http://localhost:3038";
 
 const token = {
@@ -27,18 +31,17 @@ interface LoginCredentials {
   password: string;
 }
 
-const register = createAsyncThunk("/api/auth", async (credentials: SignupCredentials) => {
+const register = createAsyncThunk("/api/auth", async (credentials: SignupCredentials, _) => {
   try {
     const { data } = await axios.post("/api/auth/signup", credentials);
     token.set(data.token);
     return data;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      toast.error("User creation error! Please try again!");
-    }
-    if (axios.isAxiosError(error) && error.response?.status === 500) {
-      toast.error(" Server error! Please try later!");
-    }
+  } catch (error: any) {
+    toast.error(
+      language.resolvedLanguage === 'uk'
+        ? getSignupError(error.response.status)
+        : getSignupErrorEN(error.response.status),
+    );
     throw error;
   }
 });
@@ -51,6 +54,9 @@ const logIn = createAsyncThunk("/auth/login", async (credentials: LoginCredentia
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response?.status === 400) {
       toast.error("Not correct login. Please try again!");
+    }
+    if (axios.isAxiosError(error) && error.response?.status === 500) {
+      toast.error(" Server error! Please try later!");
     }
     throw error;
   }
@@ -76,13 +82,13 @@ const logOut = createAsyncThunk("/auth/logout", async () => {
 const fetchCurrentUser = createAsyncThunk(
   "auth/current",
   async (_, thunkAPI) => { 
-    const { token} = (thunkAPI.getState() as { auth: any }).auth;
+    const { token : persistToken} = (thunkAPI.getState() as { auth: any }).auth;
    
-    if (token === null) {
+    if (persistToken === null) {
       return thunkAPI.rejectWithValue("Token not found");
     }
 
-    token.set(token);
+    token.set(persistToken);
     try {
       const { data } = await axios.get("/api/auth/current");
       return data;

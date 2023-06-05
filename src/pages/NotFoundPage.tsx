@@ -1,4 +1,4 @@
-import {useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "../components/container/Container";
 import { Box, Button } from "@mui/material";
@@ -16,17 +16,19 @@ const NotFoundPage = () => {
 
   return (
     <Box component="section" sx={{ padding: "50px 0" }}>
-        <Container>
-            <Button type="button" onClick={handleClick}>
-       Go back
-      </Button>
-      <p
-        style={{ paddingTop: "20px", paddingBottom: "20px", fontSize: "20px" }}
-      >
-      </p>
-        </Container>
-      </Box>
-      
+      <Container>
+        <Button type="button" onClick={handleClick}>
+          Go back
+        </Button>
+        <p
+          style={{
+            paddingTop: "20px",
+            paddingBottom: "20px",
+            fontSize: "20px",
+          }}
+        ></p>
+      </Container>
+    </Box>
   );
 };
 

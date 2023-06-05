@@ -23,7 +23,7 @@ export default function Cart() {
     const translatedText = translatedProduct?.text || item.text;
     const translatedPrice = translatedProduct?.price || item.price;
     const totalPrice = translatedPrice * item.quantity;
-  
+
     return {
       ...item,
       text: translatedText,

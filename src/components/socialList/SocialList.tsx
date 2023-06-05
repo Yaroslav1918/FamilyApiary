@@ -30,7 +30,7 @@ type SocialListProps = {
 export default function SocialList({ sx }: SocialListProps) {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", mt: 2, ...sx }}>
-      <SocialLink href="https://www.facebook.com"  target="_blank">
+      <SocialLink href="https://www.facebook.com" target="_blank">
         <Facebook style={{ fontSize: 25, color: "white" }} />
       </SocialLink>
       <SocialLink href="https://www.twitter.com" target="_blank">
@@ -41,4 +41,4 @@ export default function SocialList({ sx }: SocialListProps) {
       </SocialLink>
     </Box>
   );
-};
+}

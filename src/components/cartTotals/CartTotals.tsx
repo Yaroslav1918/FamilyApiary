@@ -12,14 +12,12 @@ import {
 } from "@mui/material";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ModalText from "../modalText";
 import { useTranslation } from "react-i18next";
 import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
 import { useAppDispatch } from "../../helpers/hooks";
 import { cartActions } from "../../redux/cart/cart_slice";
-
-
 
 export default function CartTotals() {
   const [openModal, setOpenModal] = useState(false);
@@ -27,15 +25,16 @@ export default function CartTotals() {
   const dispatch = useAppDispatch();
   const translatedItemsArray = GetTranslatedItemsArray();
   const { t } = useTranslation();
+
   const translatedItems = productItems.map((item) => {
     const translatedProduct = translatedItemsArray.find(
       (product) => product.id === item.id
     );
-  
+
     const translatedText = translatedProduct?.text || item.text;
     const translatedPrice = translatedProduct?.price || item.price;
     const totalPrice = translatedPrice * item.quantity;
-  
+
     return {
       ...item,
       text: translatedText,
@@ -43,7 +42,7 @@ export default function CartTotals() {
       totalPrice: totalPrice,
     };
   });
-  
+
   const total = productItems.reduce((acc, { quantity, id }) => {
     const product = translatedItemsArray.find((p) => p.id === id);
     if (product) {
@@ -55,8 +54,6 @@ export default function CartTotals() {
     setOpenModal(false);
   };
 
-
-  
   return (
     <Box width="100%" mx="auto" mt={4}>
       <Typography variant="h4" align="center" gutterBottom>

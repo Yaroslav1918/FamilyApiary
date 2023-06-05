@@ -36,7 +36,7 @@ const HoneyCard = () => {
   };
   const { name } = useParams();
   const { t } = useTranslation();
-const products = GetTranslatedItemsArray()
+  const products = GetTranslatedItemsArray();
   const dispatch = useDispatch();
   return (
     <>
@@ -69,7 +69,7 @@ const products = GetTranslatedItemsArray()
                 bottom: "10%",
               }}
             >
-             {t("productSingle")}
+              {t("productSingle")}
             </Typography>
           </Box>
           <Grid
@@ -86,8 +86,13 @@ const products = GetTranslatedItemsArray()
                     <CardMedia
                       component="img"
                       image={image}
+                      loading="lazy"
                       alt="Raw honeycomb"
-                      sx={{ width: { xs: "50%", md: "300px", lg: "400px" }, margin: "0 auto", borderRadius: "5px" }}
+                      sx={{
+                        width: { xs: "50%", md: "300px", lg: "400px" },
+                        margin: "0 auto",
+                        borderRadius: "5px",
+                      }}
                     />
                   </Grid>
                   <Grid item xs={8}>
@@ -118,7 +123,7 @@ const products = GetTranslatedItemsArray()
                       variant="subtitle1"
                       sx={{ mb: 4, color: Colors.danger, fontSize: "25px" }}
                     >
-                      {price}  {t("currency")}
+                      {price} {t("currency")}
                     </Typography>
                     <Box
                       component="div"
@@ -141,7 +146,7 @@ const products = GetTranslatedItemsArray()
                         InputProps={{
                           inputProps: { min: 1, max: 10, step: 1 },
                           endAdornment: (
-                            <Box sx={{ display: "flex", alignItems: "center",  }}>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
                               <IconButton
                                 size="small"
                                 onClick={handleQuantityDecrement}
@@ -176,7 +181,7 @@ const products = GetTranslatedItemsArray()
                           color: Colors.white,
                           padding: "10px 45px",
                           fontSize: "13px",
-                          maxWidth: { xs: "100%", },
+                          maxWidth: { xs: "100%" },
                           "&:hover": { backgroundColor: Colors.dangerDark },
                         }}
                         onClick={() =>
@@ -195,11 +200,14 @@ const products = GetTranslatedItemsArray()
                         <ShoppingBasketIcon
                           sx={{ fontSize: 14, marginRight: "8px" }}
                         />
-                       {t("addToCard")}
+                        {t("addToCard")}
                       </Button>
                     </Box>
                     <SocialList
-                      sx={{ justifyContent: { md: "start", xs: "center"}, marginTop: "40px" }}
+                      sx={{
+                        justifyContent: { md: "start", xs: "center" },
+                        marginTop: "40px",
+                      }}
                     />
                   </Grid>
                 </React.Fragment>

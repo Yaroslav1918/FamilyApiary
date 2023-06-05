@@ -1,18 +1,12 @@
-import React from "react";
 import Hero from "../components/hero";
 import OurMission from "../components/ourMission";
 import OurProducts from "../components/ourProducts";
 import OurGallery from "../components/ourGallery";
 import TypesHoney from "../components/typesHoney";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { getIsLoggedIn } from "../redux/auth/auth-selectors";
-import { useDispatch, useSelector } from "react-redux";
-
 
 const Home = () => {
-  const dispatch = useDispatch()
-  const isLoggedIn = useSelector(getIsLoggedIn)
   const [refHero, inViewHero] = useInView({
     triggerOnce: true,
     threshold: 0.2,
@@ -38,7 +32,6 @@ const Home = () => {
     threshold: 0.2,
   });
 
-
   return (
     <>
       <motion.div
@@ -59,15 +52,15 @@ const Home = () => {
         <OurMission />
       </motion.div>
 
-       <motion.div
+      <motion.div
         ref={refProducts}
         initial={{ opacity: 0 }}
         animate={inViewProducts ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
         <OurProducts />
-      </motion.div> 
- 
+      </motion.div>
+
       <motion.div
         ref={refGallery}
         initial={{ opacity: 0 }}
@@ -84,7 +77,7 @@ const Home = () => {
         transition={{ duration: 0.5 }}
       >
         <TypesHoney />
-      </motion.div> 
+      </motion.div>
     </>
   );
 };

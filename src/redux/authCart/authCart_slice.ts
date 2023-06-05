@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addProducts } from "./authCart_operations";
+import { addProductsAuth } from "./authCart_operations";
 
 export interface CartItem {
     id: number;
@@ -22,12 +22,12 @@ export interface CartItem {
   
   
 const productSlice = createSlice({
-    name: "product",
+    name: "productSlice",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(addProducts.fulfilled, (state, {payload}) => {
-            state.items = payload.items;
+        builder.addCase(addProductsAuth.fulfilled, (state, {payload}) => {
+            state.items =payload.items;
             state.totalQuantity = payload.totalQuantity
           });
     },

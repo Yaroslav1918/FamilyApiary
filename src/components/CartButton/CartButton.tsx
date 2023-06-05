@@ -9,18 +9,14 @@ import CartItem from "../CartItem";
 import { useAppSelector } from "../../helpers/hooks";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
-
+import { RootState } from "../../redux/store";
 const { cart } = routes;
+
 const CartButton = () => {
   const totalQuantity = useAppSelector(
     (state) => state.cartItems.totalQuantity
   );
-  const totalQuantityAuth = useAppSelector(
-    (state) => state.product.totalQuantity
-  );
-  const isLoggedIn = useSelector(getIsLoggedIn);
-  const items = useAppSelector((state) => state.cartItems.items);
+  const items = useSelector((state: RootState) => state.cartItems.items);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const isDesktopScreen = useMediaQuery("(min-width: 1200px)");
   const { t } = useTranslation();
@@ -35,43 +31,42 @@ const CartButton = () => {
 
   return (
     <Button
-  component={Link}
-  to={cart.path}
-  sx={{ color: Colors.black }}
-  onMouseEnter={handlePopoverOpen}
-  onMouseLeave={handlePopoverClose}
->
-  <Badge showZero badgeContent={isLoggedIn ? totalQuantityAuth : totalQuantity } color="error">
-    <ShoppingBasket />
-  </Badge>
-  {isDesktopScreen && (
-    <Popover
-      id="mouse-over-popover"
-      sx={{
-        pointerEvents: "none",
-      }}
-      open={open && isDesktopScreen}
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "left",
-      }}
-      onClose={handlePopoverClose}
-      disableRestoreFocus
+      component={Link}
+      to={cart.path}
+      sx={{ color: Colors.black }}
+      onMouseEnter={handlePopoverOpen}
+      onMouseLeave={handlePopoverClose}
     >
-      {items.length === 0 ? (
-        <Typography sx={{ p: 1 }}>{t("shopCart")}</Typography>
-      ) : (
-        <CartItem items={items} hideContent />
+      <Badge showZero badgeContent={totalQuantity} color="error">
+        <ShoppingBasket />
+      </Badge>
+      {isDesktopScreen && (
+        <Popover
+          id="mouse-over-popover"
+          sx={{
+            pointerEvents: "none",
+          }}
+          open={open && isDesktopScreen}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          onClose={handlePopoverClose}
+          disableRestoreFocus
+        >
+          {items.length === 0 ? (
+            <Typography sx={{ p: 1 }}>{t("shopCart")}</Typography>
+          ) : (
+            <CartItem items={items} hideContent />
+          )}
+        </Popover>
       )}
-    </Popover>
-  )}
-</Button>
-
+    </Button>
   );
 };
 

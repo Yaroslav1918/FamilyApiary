@@ -4,7 +4,7 @@ import Container from "../container/Container";
 import { useTranslation } from "react-i18next";
 
 export default function AboutUsDescription() {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <Box
       component="section"
@@ -52,9 +52,9 @@ export default function AboutUsDescription() {
               sx={{ fontSize: { xs: 20, sm: 25, md: 30 } }}
               mb={6}
             >
-            {t("whatHon")} {" "}
+              {t("whatHon")}{" "}
               <Box component="span" sx={{ color: Colors.orange }}>
-              {t("whatHoneyB")}  
+                {t("whatHoneyB")}
               </Box>
             </Typography>
             <Box
@@ -64,6 +64,7 @@ export default function AboutUsDescription() {
               }}
               alt={t("bee")}
               src="/images/imgBack.jpg"
+              loading="lazy"
             />
           </Grid>
           <Grid item xs={12} md={8}>
@@ -78,7 +79,7 @@ export default function AboutUsDescription() {
               }}
               mb={5}
             >
-             {t("beeMeaning")}
+              {t("beeMeaning")}
             </Box>
             <Box
               component="img"
@@ -92,9 +93,9 @@ export default function AboutUsDescription() {
                 height: "400px",
                 mr: { xs: 0, lg: 10 },
               }}
-             
               alt="Apiary"
               src="/images/ourGallery/apiary.jpg"
+              loading="lazy"
             />
             <Box
               component="img"
@@ -108,14 +109,14 @@ export default function AboutUsDescription() {
               }}
               alt="Apiary"
               src="/images/ourGallery/fatherPhoto1.jpg"
+              loading="lazy"
             />
             <Box
               component="p"
               mt={5}
               sx={{ fontSize: { xs: 14, md: 20, sm: 17 } }}
             >
-              
-             {t("beeMeaningSecond")}
+              {t("beeMeaningSecond")}
             </Box>
           </Grid>
         </Grid>

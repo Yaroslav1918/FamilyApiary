@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios"
 import { AxiosResponse } from 'axios';
-import {  getProducts, removeItem } from "./cart_operations";
+import {  addProducts, getProducts, removeItem } from "./cart_operations";
 
 interface CartItem {
   id: number;
@@ -64,10 +64,22 @@ const cartSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-   
-    builder.addCase(removeItem.fulfilled, (state, {payload}) => {
-      state.items = state.items.filter((item) => item.id !== payload.id);
+    builder.addCase(addProducts.fulfilled, (state, {payload}) => {
+      state.items =payload.items;
+      state.totalQuantity = payload.totalQuantity
     });
+    builder.addCase(removeItem.fulfilled, (state, {payload}) => {
+      state.items =payload.cart.items;
+      state.totalQuantity = payload.cart.totalQuantity
+    });
+
+
+    builder.addCase(getProducts.fulfilled, (state, {payload}) => {
+      console.log("🚀 ~ file: cart_slice.ts:81 ~ builder.addCase ~ payload:", payload)
+      state.items = payload[0].items;
+  state.totalQuantity = payload[0].totalQuantity;
+    });
+
  
   },
 //   extraReducers: builder => {

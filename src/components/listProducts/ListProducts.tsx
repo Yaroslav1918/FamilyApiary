@@ -1,4 +1,4 @@
-import { List, Typography } from "@mui/material";
+import { List } from "@mui/material";
 import ItemProducts from "../itemProducts";
 
 interface Product {
@@ -7,7 +7,7 @@ interface Product {
   text: string;
   price: number;
   description: string;
-  category: string
+  category: string;
 }
 
 interface Props {
@@ -15,7 +15,6 @@ interface Props {
 }
 
 export default function ListProducts({ products }: Props) {
-
   return (
     <List
       sx={{
@@ -27,8 +26,15 @@ export default function ListProducts({ products }: Props) {
       }}
     >
       {products.map(({ image, text, price, id }) => (
-        <ItemProducts key={id} image={image} price={price} text={text} id={id} quantity={1}  />
+        <ItemProducts
+          key={id}
+          image={image}
+          price={price}
+          text={text}
+          id={id}
+          quantity={1}
+        />
       ))}
     </List>
   );
-};
+}
