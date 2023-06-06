@@ -4,15 +4,15 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "../store";
 import { useAppSelector } from "../../helpers/hooks";
-import i18next from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import i18next from "i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 import { getSignupError, getSignupErrorEN } from "../../helpers/getTextError";
 
 const language = i18next.use(LanguageDetector);
-axios.defaults.baseURL = "https://git.heroku.com/family-apiary.git";
+axios.defaults.baseURL = "https://family-apiary.herokuapp.com/";
 
 const token = {
-  set(token: null | string ) {
+  set(token: null | string) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   unset() {
@@ -21,7 +21,7 @@ const token = {
 };
 
 interface SignupCredentials {
-  name: string
+  name: string;
   email: string;
   password: string;
 }
@@ -31,39 +31,44 @@ interface LoginCredentials {
   password: string;
 }
 
-const register = createAsyncThunk("/api/auth", async (credentials: SignupCredentials, _) => {
-  try {
-    const { data } = await axios.post("/api/auth/signup", credentials);
-    token.set(data.token);
-    return data;
-  } catch (error: any) {
-    toast.error(
-      language.resolvedLanguage === 'uk'
-        ? getSignupError(error.response.status)
-        : getSignupErrorEN(error.response.status),
-    );
-    throw error;
+const register = createAsyncThunk(
+  "/api/auth",
+  async (credentials: SignupCredentials, _) => {
+    try {
+      const { data } = await axios.post("/api/auth/signup", credentials);
+      token.set(data.token);
+      return data;
+    } catch (error: any) {
+      toast.error(
+        language.resolvedLanguage === "uk"
+          ? getSignupError(error.response.status)
+          : getSignupErrorEN(error.response.status)
+      );
+      throw error;
+    }
   }
-});
+);
 
-const logIn = createAsyncThunk("/auth/login", async (credentials: LoginCredentials) => {
-  try {
-    const { data } = await axios.post("/api/auth/login", credentials);
-    token.set(data.token);
-    return data;
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      toast.error("Not correct login. Please try again!");
+const logIn = createAsyncThunk(
+  "/auth/login",
+  async (credentials: LoginCredentials) => {
+    try {
+      const { data } = await axios.post("/api/auth/login", credentials);
+      token.set(data.token);
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        toast.error("Not correct login. Please try again!");
+      }
+      if (axios.isAxiosError(error) && error.response?.status === 500) {
+        toast.error(" Server error! Please try later!");
+      }
+      throw error;
     }
-    if (axios.isAxiosError(error) && error.response?.status === 500) {
-      toast.error(" Server error! Please try later!");
-    }
-    throw error;
   }
-});
+);
 
 const logOut = createAsyncThunk("/auth/logout", async () => {
- 
   try {
     await axios.get("/api/auth/logout");
     token.unset();
@@ -71,7 +76,7 @@ const logOut = createAsyncThunk("/auth/logout", async () => {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       toast.error("Missing header with authorization token!");
     }
-   
+
     if (axios.isAxiosError(error) && error.response?.status === 500) {
       toast.error(" Server error! Please try later!");
     }
@@ -81,9 +86,9 @@ const logOut = createAsyncThunk("/auth/logout", async () => {
 
 const fetchCurrentUser = createAsyncThunk(
   "auth/current",
-  async (_, thunkAPI) => { 
-    const { token : persistToken} = (thunkAPI.getState() as { auth: any }).auth;
-   
+  async (_, thunkAPI) => {
+    const { token: persistToken } = (thunkAPI.getState() as { auth: any }).auth;
+
     if (persistToken === null) {
       return thunkAPI.rejectWithValue("Token not found");
     }
