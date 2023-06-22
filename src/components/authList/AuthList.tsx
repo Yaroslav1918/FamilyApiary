@@ -5,9 +5,10 @@ import { Colors } from "../../styles";
 import { useTranslation } from "react-i18next";
 type AuthListProps = {
   onCloseMenu?: () => void;
+  flexDirection?: Boolean;
 };
 const { signIn, signUp } = routes;
-export default function AuthList({ onCloseMenu }: AuthListProps) {
+export default function AuthList({ onCloseMenu, flexDirection }: AuthListProps) {
   const { t } = useTranslation();
   return (
     <List
@@ -15,6 +16,7 @@ export default function AuthList({ onCloseMenu }: AuthListProps) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        flexDirection: flexDirection && "column",
         padding: 0,
       }}
     >
@@ -32,8 +34,8 @@ export default function AuthList({ onCloseMenu }: AuthListProps) {
           onClick={onCloseMenu}
         >
           <ListItemText
-            primary={`${t("login")} /`}
-            primaryTypographyProps={{ style: { fontSize: "19px" } }}
+            primary={t("login") + (flexDirection ? "" : " /")}
+            primaryTypographyProps={{ style: { fontSize: "17px" } }}
           />
         </ListItemButton>
       </ListItem>
@@ -52,7 +54,7 @@ export default function AuthList({ onCloseMenu }: AuthListProps) {
         >
           <ListItemText
             primary={t("signUP")}
-            primaryTypographyProps={{ style: { fontSize: "19px" } }}
+            primaryTypographyProps={{ style: { fontSize: "17px" } }}
           />
         </ListItemButton>
       </ListItem>

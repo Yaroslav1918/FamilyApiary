@@ -8,19 +8,24 @@ import { useState } from "react";
 interface MenuListProps {
   item: string;
   options: string[];
-  onClick?: () => void;
+  onDrawerOpen?: () => void;
 }
 
-export default function MenuList({ item, options, onClick }: MenuListProps) {
+export default function MenuItemList({
+  item,
+  options,
+  onDrawerOpen,
+}: MenuListProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
-    onClick?.();
+    onDrawerOpen?.();
   };
 
   return (
@@ -32,7 +37,10 @@ export default function MenuList({ item, options, onClick }: MenuListProps) {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         key={item}
-        sx={{ color: "inherit", fontSize: { xs: "14px", lg: "16px" } }}
+        sx={{
+          color: "inherit",
+          fontSize: { xs: "14px", lg: "16px" },
+        }}
       >
         {item}
       </Button>
@@ -41,6 +49,14 @@ export default function MenuList({ item, options, onClick }: MenuListProps) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}

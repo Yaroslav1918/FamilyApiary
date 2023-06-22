@@ -44,17 +44,17 @@ export default function Hero() {
           >
             <Box
               component="p"
-              sx={{ fontSize: { md: 29, xs: 17, sm: 25 }, fontWeight: "500" }}
+              sx={{ fontSize: { md: 29, xs: 15, sm: 25 }, fontWeight: "500" }}
             >
               {t("heroDesc")}
             </Box>
             <Typography
               component="h1"
-              sx={{ fontSize: { md: 50, xs: 25, sm: 35 }, fontWeight: "600" }}
+              sx={{ fontSize: { md: 50, xs: 26, sm: 35 }, fontWeight: "600" }}
             >
               {t("title")}
             </Typography>
-            <Box component="p" sx={{ fontSize: { xs: 14, md: 30, sm: 26 } }}>
+            <Box component="p" sx={{ fontSize: { xs: 15, md: 30, sm: 26 } }}>
               {t("descriptionHero")}
             </Box>
             <ButtonStyled text={t("viewMore")} to="/aboutUs" />

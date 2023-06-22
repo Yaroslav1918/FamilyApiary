@@ -18,15 +18,16 @@ export default function GalleryModal({
           left: "50%",
           transform: "translate(-50%, -50%)",
           outline: "none",
+          width: { xs: "80%", sm: "60%", md: "32%" },
         }}
       >
         <img
           src={selectedImage}
-          alt="modal "
+          alt="modal"
           loading="lazy"
           style={{
             objectFit: "contain",
-            width: "80%",
+            width: "100%",
             borderRadius: "2%",
           }}
         />

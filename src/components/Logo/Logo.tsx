@@ -20,10 +20,11 @@ export default function Logo({ sx }: LogoProps) {
         ...sx,
         color: Colors.dark,
         display: "flex",
+        justifyContent: "center",
         alignItems: "baseline",
         textDecoration: "none",
         fontFamily: "Great Vibes, cursive",
-        fontSize: i18next.language === "uk" ? "20px" : "30px",
+        fontSize: i18next.language === "uk" ? "20px" : "25px",
         fontWeight: "600",
       }}
     >

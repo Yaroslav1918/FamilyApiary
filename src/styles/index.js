@@ -9,7 +9,7 @@ export const Colors = {
   dangerDark: "#ff4e22",
   warning: "rgb(203, 151, 68)",
   warningDark: "rgb(203, 141, 68)",
-  dark: "#3c3c3c", 
+  dark: "#3c3c3c",
   orange: "#D3A863",
   muted: "#abafb3",
   border: "#DDDFE1",
@@ -20,7 +20,8 @@ export const Colors = {
   white: "#fff",
   bgFooter: "#FCD5CD",
   black: "#45423E",
-  svg: "#ff8e31"
+  svg: "#ff8e31",
+  googleBack: "#7697f9",
 };
 
 // TODO: define overrides object to create theme

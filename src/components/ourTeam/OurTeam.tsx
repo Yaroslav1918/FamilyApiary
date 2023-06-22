@@ -31,7 +31,7 @@ export default function OurTeam() {
           component="h3"
           sx={{
             textAlign: "center",
-            fontSize: "40px",
+            fontSize: { xs: 25, md: 37, sm: 32 },
             fontWeight: "700",
           }}
         >
@@ -39,8 +39,8 @@ export default function OurTeam() {
         </Typography>
         <Box
           component="p"
-          mt={5}
-          sx={{ fontSize: { xs: 14, md: 20, sm: 17 }, textAlign: "center" }}
+          mt={2}
+          sx={{ fontSize: { xs: 17, md: 21, sm: 19 }, textAlign: "center" }}
         >
           {t("meet")}
         </Box>

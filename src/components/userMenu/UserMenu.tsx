@@ -7,23 +7,32 @@ import {
   ListItemText,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 import ExitToApp from "@mui/icons-material/ExitToApp";
 import operations from "../../redux/auth/auth-operations";
 import { useAppDispatch, useAppSelector } from "../../helpers/hooks";
 import Avatar from "@mui/material/Avatar";
 import { cartActions } from "../../redux/cart/cart_slice";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { OrderHistory } from "../orderHistory";
+import { routes } from "../../routes/config";
+const { orderHistory } = routes;
 
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const handleClickToHome = () => {
-    navigate("/", { replace: true });
+    navigate("/");
+  };
+  const handleClickToOrderHistory = () => {
+    navigate(orderHistory.path);
   };
 
-  const username = useAppSelector((state) => state.auth.user.name ?? "");
+  const username = useAppSelector((state) => state.auth.user?.name ?? "");
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -51,8 +60,6 @@ const UserMenu = () => {
           </ListItemIcon>
           <ListItemText primary={username} />
         </MenuItem>
-
-        <MenuItem></MenuItem>
         <MenuItem
           onClick={() => {
             dispatch(cartActions.resetToInitialState());
@@ -63,7 +70,14 @@ const UserMenu = () => {
           <ListItemIcon>
             <ExitToApp />
           </ListItemIcon>
-          <ListItemText primary="Logout" />
+          <ListItemText primary={t("logOut")} />
+        </MenuItem>
+        <MenuItem onClick={handleClickToOrderHistory}>
+          <ListItemIcon>
+            <ListAltIcon />
+          </ListItemIcon>
+          <ListItemText primary={t("orderHistory")} />
+
         </MenuItem>
       </Menu>
     </>

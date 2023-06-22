@@ -14,13 +14,16 @@ import { Colors } from "../../styles";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import OurProducts from "../ourProducts";
 import Container from "../container/Container";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../redux/cart/cart_slice";
 import React, { useState } from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useTranslation } from "react-i18next";
 import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
+import { addProducts } from "../../redux/cart/cart_operations";
+import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
+
 const HoneyCard = () => {
   const [quantity, setQuantity] = useState(1);
   const handleQuantityIncrement = () => {
@@ -38,6 +41,28 @@ const HoneyCard = () => {
   const { t } = useTranslation();
   const products = GetTranslatedItemsArray();
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  const onAddToCart = (
+    id: number,
+    text: string,
+    image: string,
+    price: number,
+    quantity: number
+  ) => {
+    const cartItem = {
+      id,
+      text,
+      image,
+      price,
+      quantity,
+      totalPrice: price * quantity,
+    };
+
+    isLoggedIn
+      ? dispatch(addProducts(cartItem))
+      : dispatch(cartActions.addItemToCart(cartItem));
+  };
+
   return (
     <>
       <Box
@@ -64,7 +89,7 @@ const HoneyCard = () => {
               component="h2"
               sx={{
                 color: Colors.white,
-                fontSize: { md: 70, xs: 50, sm: 60 },
+                fontSize: { md: 70, xs: 45, sm: 60 },
                 position: "absolute",
                 bottom: "10%",
               }}
@@ -100,10 +125,10 @@ const HoneyCard = () => {
                       <Typography
                         gutterBottom
                         variant="h5"
-                        component="div"
+                        component="h5"
                         sx={{
                           marginBottom: "30px",
-                          fontSize: { md: "30px", lg: "40px" },
+                          fontSize: { xs: "20px", md: "30px", lg: "40px" },
                         }}
                       >
                         {text}
@@ -113,7 +138,7 @@ const HoneyCard = () => {
                         color="text.secondary"
                         sx={{
                           marginBottom: "30px",
-                          fontSize: { xs: "20px", lg: "25px" },
+                          fontSize: { xs: "18px", lg: "25px" },
                         }}
                       >
                         {description}
@@ -121,7 +146,12 @@ const HoneyCard = () => {
                     </CardContent>
                     <Typography
                       variant="subtitle1"
-                      sx={{ mb: 4, color: Colors.danger, fontSize: "25px" }}
+                      sx={{
+                        mb: 4,
+                        color: Colors.danger,
+                        fontSize: "25px",
+                        textAlign: { xs: "center", sm: "start" },
+                      }}
                     >
                       {price} {t("currency")}
                     </Typography>
@@ -135,7 +165,7 @@ const HoneyCard = () => {
                       <TextField
                         id="quantity"
                         name="quantity"
-                        label="Quantity"
+                        label={t("quantity")}
                         value={quantity}
                         onChange={handleQuantityChange}
                         InputLabelProps={{
@@ -175,30 +205,24 @@ const HoneyCard = () => {
                         variant="contained"
                         sx={{
                           display: "flex",
-                          alignItems: "center",
+                          alignItems: { xs: "baseline", sm: "center" },
                           justifyContent: "center",
                           background: Colors.danger,
                           color: Colors.white,
-                          padding: "10px 45px",
-                          fontSize: "13px",
+                          padding: { xs: "10px", sm: "10px 20px" },
+                          fontSize: { xs: "10px", sm: "13px" },
                           maxWidth: { xs: "100%" },
                           "&:hover": { backgroundColor: Colors.dangerDark },
                         }}
                         onClick={() =>
-                          dispatch(
-                            cartActions.addItemToCart({
-                              id,
-                              text,
-                              image,
-                              price,
-                              quantity,
-                              totalPrice: price * quantity,
-                            })
-                          )
+                          onAddToCart(id, text, image, price, quantity)
                         }
                       >
                         <ShoppingBasketIcon
-                          sx={{ fontSize: 14, marginRight: "8px" }}
+                          sx={{
+                            fontSize: { xs: 12, sm: 14 },
+                            marginRight: "8px",
+                          }}
                         />
                         {t("addToCard")}
                       </Button>

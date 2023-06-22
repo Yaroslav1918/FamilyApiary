@@ -9,7 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import { Colors } from "../../styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../redux/cart/cart_slice";
 import { ShoppingBasket } from "@mui/icons-material";
 import GalleryModal from "../galleryModal/GalleryModal ";
@@ -19,6 +19,8 @@ import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { styled } from "@mui/system";
 import { Link } from "react-router-dom";
+import { addProducts } from "../../redux/cart/cart_operations";
+import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
 
 interface Item {
   id: number;
@@ -58,10 +60,29 @@ const SliderProducts = ({
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const products = GetTranslatedItemsArray();
-
+  const isLoggedIn = useSelector(getIsLoggedIn);
   const handleOpenModal = (img: string) => {
     setSelectedImage(img);
     setOpen(true);
+  };
+  const onAddToCart = (
+    id: number,
+    text: string,
+    image: string,
+    price: number
+  ) => {
+    const cartItem = {
+      id,
+      text,
+      image,
+      price,
+      quantity: 1,
+      totalPrice: price * 1,
+    };
+
+    isLoggedIn
+      ? dispatch(addProducts(cartItem))
+      : dispatch(cartActions.addItemToCart(cartItem));
   };
 
   const handleCloseModal = () => {
@@ -196,18 +217,7 @@ const SliderProducts = ({
                 }}
               >
                 <Button
-                  onClick={() =>
-                    dispatch(
-                      cartActions.addItemToCart({
-                        id,
-                        text,
-                        image,
-                        price,
-                        quantity: 1,
-                        totalPrice: price * 1,
-                      })
-                    )
-                  }
+                  onClick={() => onAddToCart(id,  text, image, price)}
                   sx={{
                     color: Colors.black,
                     fontSize: "15px",

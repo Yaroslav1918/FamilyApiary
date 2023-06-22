@@ -55,19 +55,27 @@ export default function Shop() {
             <Typography
               component="h3"
               sx={{
-                fontSize: { xs: 30 },
+                fontSize: { xs: 20, sm: 25 },
                 fontWeight: "600",
+                textAlign: { xs: "center", md : "left" },
               }}
             >
               {t("categories")}
             </Typography>
             <List>
               {categories.map(({ name, id }) => (
-                <ListItem key={id} sx={{ padding: 0 }}>
+                <ListItem
+                  key={id}
+                  sx={{
+                    display: " flex",
+                    flexDirection: { xs: "column", md: "row" },
+                    padding: 0,
+                  }}
+                >
                   <Button
                     onClick={() => setSelectedCategory(name)}
                     sx={{
-                      fontSize: { md: 20, xs: 20 },
+                      fontSize: { md: 20, xs: 15 },
                       padding: 0,
                       color:
                         name === selectedCategory

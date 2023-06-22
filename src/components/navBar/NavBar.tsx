@@ -1,19 +1,11 @@
-import * as React from "react";
+import { useState } from "react";
 import { Menu } from "@mui/icons-material";
-import {
-  Box,
-  Toolbar,
-  List,
-  Drawer,
-  IconButton,
-  AppBar,
-  Typography,
-} from "@mui/material";
+import { Box, Toolbar, List, Drawer, IconButton, AppBar } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import styled from "@emotion/styled";
 import { Colors } from "../../styles";
 import Logo from "../Logo";
-import MenuList from "../menuList";
+import MenuItemList from "../menuItemList";
 import { Link } from "react-router-dom";
 import { routes } from "../../routes/config";
 import CartButton from "../CartButton";
@@ -22,6 +14,9 @@ import UserMenu from "../userMenu/UserMenu";
 import LngSwitcher from "../lngSwitcher/LngSwitcher";
 import { useTranslation } from "react-i18next";
 import AuthList from "../authList/AuthList";
+import { useOutsideClick } from "../../helpers/outsideClick";
+import { getIsLoggedIn, getIsToken } from "../../redux/auth/auth-selectors";
+
 const { contactUs } = routes;
 
 const StyledToolbar = styled(Toolbar)({
@@ -35,13 +30,21 @@ interface NavItem {
 }
 
 export default function NavBar() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const isLoggedIn = useAppSelector(getIsLoggedIn);
+    const token = useAppSelector(getIsToken);
   const { t } = useTranslation();
   const showAuthList = useMediaQuery("(min-width:500px)");
+  const showUserMenu = useMediaQuery("(max-width:400px)");
   const handleDrawerToggle = () => {
     setMobileOpen((prev) => !prev);
   };
+  const handleDrawerClose = () => {
+    setMobileOpen(false);
+  };
+
+  const ref = useOutsideClick(handleDrawerToggle, mobileOpen);
+
   const navItems: NavItem[] = [
     { label: t("home") },
     { label: t("pages"), options: [t("aboutUs"), t("contactUS")] },
@@ -49,43 +52,47 @@ export default function NavBar() {
     { label: t("portfolio"), options: [t("gallery")] },
   ];
   const drawer = (
-    <>
+    <Box
+      ref={ref}
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <List sx={{ display: "flex", flexDirection: "column" }}>
         {navItems.map(
           (item) =>
             item.options && (
-              <MenuList
+              <MenuItemList
                 item={item.label}
                 options={item.options}
+                onDrawerOpen={handleDrawerClose}
                 key={item.label}
-                onClick={handleDrawerToggle}
               />
             )
         )}
       </List>
-      {!showAuthList && <AuthList onCloseMenu={handleDrawerToggle} />}
-    </>
+      {!showAuthList && !isLoggedIn && (
+        <AuthList onCloseMenu={handleDrawerClose} flexDirection />
+      )}
+      {showUserMenu && isLoggedIn && token && <UserMenu />}
+    </Box>
   );
   return (
     <AppBar position="sticky">
       <StyledToolbar>
         <Logo />
-        <Box sx={{ display: { md: "flex", xs: "none" } }}>
-          {navItems.map(
-            (item) =>
-              item.options && (
-                <MenuList
-                  item={item.label}
-                  options={item.options}
-                  key={item.label}
-                />
-              )
-          )}
-        </Box>
-        <Box
-          component="nav"
-          sx={{ display: "flex", justifyContent: "space-between" }}
-        >
+        <Box component="nav">
+          <Box sx={{ display: { md: "flex", xs: "none" } }}>
+            {navItems.map(
+              (item) =>
+                item.options && (
+                  <MenuItemList
+                    item={item.label}
+                    options={item.options}
+                    key={item.label}
+                  />
+                )
+            )}
+          </Box>
+
           <Drawer
             open={mobileOpen}
             ModalProps={{
@@ -95,7 +102,7 @@ export default function NavBar() {
               display: { xs: "block", md: "none" },
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
-                width: "240px",
+                width: "220px",
                 alignItems: "center",
               },
             }}
@@ -112,14 +119,13 @@ export default function NavBar() {
         >
           <CartButton />
           <LngSwitcher />
-          {isLoggedIn ? (
+          {(isLoggedIn && token) && !showUserMenu ? (
             <UserMenu />
           ) : (
             <Box>{showAuthList && <AuthList />}</Box>
           )}
         </Box>
-
-        <Typography
+        <Box
           component={Link}
           to={contactUs.path}
           sx={{
@@ -135,7 +141,7 @@ export default function NavBar() {
           }}
         >
           {t("contact")}
-        </Typography>
+        </Box>
         <IconButton
           color="inherit"
           aria-label="open drawer"

@@ -1,11 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import {
-  Formik,
-  Field,
-  Form,
-  FormikHelpers,
-  ErrorMessage,
-} from "formik";
+import { Formik, Field, Form, FormikHelpers, ErrorMessage } from "formik";
 import "react-app-polyfill/ie11";
 import Container from "../container/Container";
 import { Colors } from "../../styles";
@@ -16,7 +10,9 @@ import { useTranslation } from "react-i18next";
 import { routes } from "../../routes/config";
 import { validate } from "../../helpers/validation/registrationForm";
 import { useEffect } from "react";
-const { signIn } = routes;
+import GoogleLoginButton from "../googleLoginButton/googleLoginButton";
+import { getIsLoggedIn, getIsToken } from "../../redux/auth/auth-selectors";
+const { signIn, shop } = routes;
 
 type FormValues = {
   name: string;
@@ -42,17 +38,23 @@ export default function SignUp() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const isLoggedIn = useAppSelector((item) => item.auth.isLoggedIn);
+  const isLoggedIn = useAppSelector(getIsLoggedIn);
+  const token = useAppSelector(getIsToken);
+
   const initialValues = {
     name: "",
     email: "",
     password: "",
   };
+
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && token) {
+      navigate(shop.path, { replace: true });
+    } else if (isLoggedIn) {
       navigate(signIn.path, { replace: true });
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, token]);
+
   const FieldErrorMessage = ({ fieldName }: { fieldName: string }) => {
     return (
       <ErrorMessage name={fieldName}>
@@ -158,6 +160,7 @@ export default function SignUp() {
               >
                 {isSubmitting ? t("submitting") : t("submit")}
               </Button>
+              <GoogleLoginButton />
             </Form>
           )}
         </Formik>

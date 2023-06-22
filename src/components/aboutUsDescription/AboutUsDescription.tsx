@@ -29,7 +29,7 @@ export default function AboutUsDescription() {
             component="h2"
             sx={{
               color: Colors.white,
-
+              fontSize: { xs: 50, sm: 60, md: 80 },
               position: "absolute",
               bottom: "10%",
             }}
@@ -71,10 +71,10 @@ export default function AboutUsDescription() {
             <Box
               component="p"
               sx={{
-                fontSize: { xs: 14, sm: 17, md: 20 },
+                fontSize: { xs: 16, sm: 18, md: 19 },
                 "&::first-letter": {
                   color: Colors.orange,
-                  fontSize: "150%",
+                 
                 },
               }}
               mb={5}
@@ -114,7 +114,7 @@ export default function AboutUsDescription() {
             <Box
               component="p"
               mt={5}
-              sx={{ fontSize: { xs: 14, md: 20, sm: 17 } }}
+              sx={{ fontSize: { xs: 16, md: 19, sm: 18 } }}
             >
               {t("beeMeaningSecond")}
             </Box>

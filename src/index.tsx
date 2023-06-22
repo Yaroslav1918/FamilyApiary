@@ -8,22 +8,25 @@ import App from "./App";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./helpers/i18next";
 import Spinner from "./components/Spinner/Spinner";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <React.Suspense fallback={<Spinner />}>
-            <I18nextProvider i18n={i18n} defaultNS={"translation"}>
-              <App />
-            </I18nextProvider>
-          </React.Suspense>
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>
+  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID ?? ""}>
+    <React.StrictMode>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <React.Suspense fallback={<Spinner />}>
+              <I18nextProvider i18n={i18n} defaultNS={"translation"}>
+                <App />
+              </I18nextProvider>
+            </React.Suspense>
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </React.StrictMode>
+  </GoogleOAuthProvider>
 );

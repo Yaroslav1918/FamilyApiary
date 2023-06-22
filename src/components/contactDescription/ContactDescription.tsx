@@ -49,7 +49,7 @@ export default function ContactDescription() {
             component="h2"
             sx={{
               color: Colors.white,
-              fontSize: { md: 70, xs: 50, sm: 60 },
+              fontSize: { md: 65, xs: 36, sm: 47 },
               position: "absolute",
               bottom: "10%",
             }}

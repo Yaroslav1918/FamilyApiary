@@ -10,9 +10,19 @@ import SignIn from "../components/signIn/SignIn";
 
 import { useTranslation } from "react-i18next";
 import { AnimatePresence } from "framer-motion";
+import { OrderHistory } from "../components/orderHistory";
 
-const { home, aboutUs, contactUs, shop, ourGallery, signUp, signIn, cart } =
-  routes;
+const {
+  home,
+  aboutUs,
+  contactUs,
+  shop,
+  ourGallery,
+  signUp,
+  signIn,
+  cart,
+  orderHistory,
+} = routes;
 const RoutesComponent = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -45,6 +55,7 @@ const RoutesComponent = () => {
           <Route path={signUp.path} element={<SignUp />} />
           <Route path={cart.path} element={<CartPage />} />
           <Route path={signIn.path} element={<SignIn />} />
+          <Route path={orderHistory.path} element={<OrderHistory />} />
           <Route path={`/${t("product")}/:name`} element={<HoneyCard />} />
 
           {/* NOT AUTH */}

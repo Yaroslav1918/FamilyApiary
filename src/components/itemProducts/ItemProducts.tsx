@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
 import { addProducts } from "../../redux/cart/cart_operations";
 
-interface ItemProductsProps {
+export interface ItemProductsProps {
   id: number;
   image: string;
   text: string;
@@ -71,7 +71,7 @@ export default function ItemProducts({
           to={`/${t("product")}/${text}`}
           image={image}
           sx={{
-            height: "300px",
+            height: { xs: "200px", sm: "300px" },
             borderRadius: "5px",
             objectFit: "cover",
             objectPosition: "50% 50%",
@@ -83,7 +83,7 @@ export default function ItemProducts({
             gutterBottom
             variant="h6"
             component="h6"
-            sx={{ fontSize: { xs: "20px", md: "24px" }, fontWeight: 700 }}
+            sx={{ fontSize: { xs: 15, sm: 20, md: 22 }, fontWeight: 700 }}
           >
             {text}
           </Typography>
@@ -91,7 +91,7 @@ export default function ItemProducts({
             component="p"
             sx={{
               color: Colors.warning,
-              fontSize: { xs: "17px", md: "20px" },
+              fontSize: { xs: 13, sm: 19 },
             }}
           >
             {price} {t("currency")}
@@ -100,7 +100,7 @@ export default function ItemProducts({
             onClick={onAddToCart}
             sx={{
               color: Colors.black,
-              fontSize: { xs: "15px", md: "17px" },
+              fontSize: { xs: 11, sm: 17 },
               fontWeight: 600,
               display: "flex",
               alignItems: "baseline",
@@ -108,7 +108,7 @@ export default function ItemProducts({
             }}
           >
             <ShoppingBasketIcon
-              sx={{ fontSize: { xs: "14px", md: "17px" }, mr: 0.5 }}
+              sx={{ fontSize: { xs: 11, sm: 17 }, mr: 0.3 }}
             />
             {t("addToCard")}
           </Button>

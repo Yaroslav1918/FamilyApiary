@@ -1,16 +1,14 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { RootState } from "../store";
-import { useAppSelector } from "../../helpers/hooks";
 import i18next from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { getSignupError, getSignupErrorEN } from "../../helpers/getTextError";
 
 const language = i18next.use(LanguageDetector);
 axios.defaults.baseURL = "https://family-apiary.herokuapp.com/";
-
+// "http://localhost:3038"
 const token = {
   set(token: null | string) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -28,7 +26,7 @@ interface SignupCredentials {
 
 interface LoginCredentials {
   email: string;
-  password: string;
+  password?: string;
 }
 
 const register = createAsyncThunk(
@@ -51,9 +49,27 @@ const register = createAsyncThunk(
 
 const logIn = createAsyncThunk(
   "/auth/login",
-  async (credentials: LoginCredentials) => {
+  async (credentials: any) => {
     try {
       const { data } = await axios.post("/api/auth/login", credentials);
+      token.set(data.token);
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        toast.error("Not correct login. Please try again!");
+      }
+      if (axios.isAxiosError(error) && error.response?.status === 500) {
+        toast.error(" Server error! Please try later!");
+      }
+      throw error;
+    }
+  }
+);
+const googleLogin = createAsyncThunk(
+  "/auth/googleLogin",
+  async (credentials: any) => {
+    try {
+      const { data } = await axios.post("/api/auth/google-login", credentials);
       token.set(data.token);
       return data;
     } catch (error: unknown) {
@@ -88,7 +104,7 @@ const fetchCurrentUser = createAsyncThunk(
   "auth/current",
   async (_, thunkAPI) => {
     const { token: persistToken } = (thunkAPI.getState() as { auth: any }).auth;
-
+  
     if (persistToken === null) {
       return thunkAPI.rejectWithValue("Token not found");
     }
@@ -110,6 +126,7 @@ const operations = {
   register,
   logOut,
   logIn,
+  googleLogin,
   fetchCurrentUser,
 };
 export default operations;

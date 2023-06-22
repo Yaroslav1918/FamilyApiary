@@ -17,6 +17,7 @@ const ButtonStyled = ({ text, to, sx }: ButtonProps) => {
       sx={{
         ...sx,
         color: Colors.white,
+        fontSize: { xs: 13, md: 16,},
         backgroundColor: Colors.warning,
         padding: "10px 37px",
         textDecoration: "none",
