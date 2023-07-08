@@ -128,7 +128,7 @@ export const SliderCard = ({
           sx={{
             position: "absolute",
             top: 11,
-            right: 30,
+            right: 37,
           }}
           checked={isItemInWishlist}
           onChange={handleToggleWishlist}
