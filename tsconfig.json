@@ -1,12 +1,8 @@
 {
   "compilerOptions": {
-     "typeRoots" : ["node_modules/@types", "src/types"],
+    "typeRoots": ["node_modules/@types", "src/types"],
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
@@ -24,7 +20,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src",  "index.d.ts"
-  ]
+  "include": ["src", "index.d.ts"],
+
 }

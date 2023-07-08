@@ -17,6 +17,9 @@ interface CartItem {
 }
 
 interface CartState {
+  wishItems: any;
+  wishlist: any;
+  wishTotalQuantity: number;
   items: CartItem[];
   totalQuantity: number;
 }
@@ -116,4 +119,92 @@ export const getAllSoldProducts = createAsyncThunk(
     }
   }
 );
+export const getAllWishProducts = createAsyncThunk(
+  "products/getAllWishProducts",
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    try {
+      const { data } = await axios.post<any, AxiosResponse<any>>(
+        "/api/products/wish-products",
+        state
+      );
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
+
+export const addToWishlistAsync = createAsyncThunk(
+  "products/addToWishlistAsync",
+  async (product: CartItem, thunkAPI) => {
+    
+    const state = thunkAPI.getState() as RootState;
+    try {
+      const { id, price, quantity, image, totalPrice, text } = product;
+      const newItem = {
+        id,
+        image,
+        text,
+        quantity,
+        price,
+        totalPrice,
+      };
+
+      const isIncludeItem = state.cartItems.wishlist.find(
+        (item) => item.id === id
+      );
+
+      let updatedItems = [];
+      if (!isIncludeItem) {
+        updatedItems = [...state.cartItems.wishlist, newItem];
+      } else {
+        updatedItems = state.cartItems.wishlist.map((item) => {
+          if (item.id === id) {
+            return {
+              ...item,
+              quantity: item.quantity + quantity,
+              totalPrice: item.totalPrice + totalPrice,
+            };
+          }
+          return item;
+        });
+      }
+
+      const updatedTotalQuantity =
+        state.cartItems.wishTotalQuantity + quantity;
+
+      const updatedCartItems = {
+        wishlist: updatedItems,
+        wishTotalQuantity: updatedTotalQuantity,
+        totalQuantity: state.cartItems.totalQuantity,
+      };
+     
+      const { data } = await axios.post<any, AxiosResponse<CartState>>(
+        "/api/products/wishlist",
+        updatedCartItems
+      );
+
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+
+  }
+);
+
+
+export const removeProductFromWishlist = createAsyncThunk(
+  "products/removeProductFromWishlist",
+  async (id: number, thunkAPI) => {
+    try {
+      const { data } = await axios.delete<any, AxiosResponse<any>>(
+        `/api/products/wishlist/${id}`
+      );
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

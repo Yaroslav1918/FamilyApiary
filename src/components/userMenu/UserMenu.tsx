@@ -5,23 +5,29 @@ import {
   IconButton,
   ListItemIcon,
   ListItemText,
+  useMediaQuery,
 } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import ExitToApp from "@mui/icons-material/ExitToApp";
+import {
+  ListAlt,
+  LabelOutlined,
+  ExitToApp,
+  AccountCircle,
+} from "@mui/icons-material";
 import operations from "../../redux/auth/auth-operations";
 import { useAppDispatch, useAppSelector } from "../../helpers/hooks";
 import Avatar from "@mui/material/Avatar";
 import { cartActions } from "../../redux/cart/cart_slice";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { OrderHistory } from "../orderHistory";
 import { routes } from "../../routes/config";
-const { orderHistory } = routes;
+import { getIsLoggedIn } from "../../redux/auth/auth-selectors";
+import FavoriteButton from "../favoriteButton";
+const { orderHistory, wishList } = routes;
 
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  
+  const showContent = useMediaQuery("(max-width:491px)");
+  const isLoggedIn = useAppSelector(getIsLoggedIn);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -31,6 +37,9 @@ const UserMenu = () => {
   const handleClickToOrderHistory = () => {
     navigate(orderHistory.path);
   };
+    const handleClickToWishList = () => {
+      navigate(wishList.path);
+    };
 
   const username = useAppSelector((state) => state.auth.user?.name ?? "");
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,13 +81,31 @@ const UserMenu = () => {
           </ListItemIcon>
           <ListItemText primary={t("logOut")} />
         </MenuItem>
-        <MenuItem onClick={handleClickToOrderHistory}>
+        <MenuItem
+          onClick={() => {
+            handleClickToOrderHistory();
+            handleClose();
+          }}
+        >
           <ListItemIcon>
-            <ListAltIcon />
+            <ListAlt />
           </ListItemIcon>
           <ListItemText primary={t("orderHistory")} />
-
         </MenuItem>
+        {showContent && isLoggedIn && (
+          <MenuItem
+            onClick={() => {
+              handleClickToWishList();
+              handleClose();
+            }}
+          >
+            <ListItemIcon>
+              <LabelOutlined />
+            </ListItemIcon>
+            <ListItemText primary={t("wishList")} />
+            <FavoriteButton />
+          </MenuItem>
+        )}
       </Menu>
     </>
   );

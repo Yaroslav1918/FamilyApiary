@@ -10,15 +10,15 @@ const itemsArr = [
   },
   {
     id: 2,
-    image: "/images/cat.jpg",
+    image: "/images/ourGallery/fatherPhoto3.jpg",
   },
   {
     id: 3,
-    image: "/images/me.jpg",
+    image: "/images/cat.jpg",
   },
   {
     id: 4,
-    image: "/images/ourGallery/fatherPhoto3.jpg",
+    image: "/images/me.jpg",
   },
 ];
 

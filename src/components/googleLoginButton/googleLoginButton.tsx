@@ -6,6 +6,7 @@ import { Colors } from "../../styles";
 import GoogleIcon from "@mui/icons-material/Google";
 import requestToGoogle from "../../helpers/requestToGoogle";
 import { useTranslation } from "react-i18next";
+import { cartActions } from "../../redux/cart/cart_slice";
 
 export default function GoogleLoginButton() {
   const dispatch = useAppDispatch();
@@ -14,6 +15,7 @@ export default function GoogleLoginButton() {
     onSuccess: async (response) => {
       try {
         const res = await requestToGoogle(response);
+        dispatch(cartActions.resetToInitialState());
         dispatch(operations.googleLogin(res));
       } catch (err) {
         console.log(err);

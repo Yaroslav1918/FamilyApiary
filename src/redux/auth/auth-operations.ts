@@ -7,8 +7,8 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { getSignupError, getSignupErrorEN } from "../../helpers/getTextError";
 
 const language = i18next.use(LanguageDetector);
-axios.defaults.baseURL = "https://family-apiary.herokuapp.com/";
-// "http://localhost:3038"
+axios.defaults.baseURL = "https://family-apiary.herokuapp.com";
+
 const token = {
   set(token: null | string) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -22,11 +22,6 @@ interface SignupCredentials {
   name: string;
   email: string;
   password: string;
-}
-
-interface LoginCredentials {
-  email: string;
-  password?: string;
 }
 
 const register = createAsyncThunk(

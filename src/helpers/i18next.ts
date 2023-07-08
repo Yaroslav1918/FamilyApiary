@@ -12,8 +12,7 @@ i18next
     supportedLngs: ["en", "uk"],
     fallbackLng: "en",
     backend: {
-      loadPath:
-        "https://family-apiary.herokuapp.com/api/translations/{{lng}}",
+      loadPath: "https://family-apiary.herokuapp.com/api/translations/{{lng}}",
     },
     interpolation: {
       escapeValue: false,

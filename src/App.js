@@ -4,8 +4,7 @@ import myTheme from "./styles";
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import MainComponent from "./components/mainComponent";
 import Footer from "./components/footer";
-import ScrollToTop from "./helpers/ScrollToTop";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useAppDispatch } from "./helpers/hooks";
 import operations from "./redux/auth/auth-operations";
 import { useSelector } from "react-redux";
@@ -13,26 +12,21 @@ import { getIsLoggedIn, getIsToken } from "./redux/auth/auth-selectors";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getProducts } from "./redux/cart/cart_operations";
-import { getProductsItems } from "./redux/cart/cart_selectors";
-
 
 function App() {
   const dispatch = useAppDispatch();
   const isLoggedIn = useSelector(getIsLoggedIn);
   const token = useSelector(getIsToken);
-    const productsItems = useSelector(getProductsItems);
+
 
   useEffect(() => {
     if (token) {
       dispatch(operations.fetchCurrentUser());
     }
-  }, [dispatch, isLoggedIn, token]);
-
-
+  }, [dispatch, token]);
 
   useEffect(() => {
     if (isLoggedIn) {
-
       dispatch(getProducts());
     }
   }, [dispatch, isLoggedIn]);
@@ -50,9 +44,7 @@ function App() {
         />
         <CssBaseline />
         <NavBar />
-        <ScrollToTop>
-          <MainComponent />
-        </ScrollToTop>
+        <MainComponent />
         <Footer />
         <ToastContainer position="top-center" autoClose={4000} />
       </ThemeProvider>

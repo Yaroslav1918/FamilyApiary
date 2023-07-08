@@ -7,11 +7,10 @@ import CartItem from "../CartItem";
 import { useTranslation } from "react-i18next";
 import { GetTranslatedItemsArray } from "../../helpers/transItemsArray";
 import CartTotals from "../cartTotals";
+import { getTotalQuantity } from "../../redux/cart/cart_selectors";
 
 export default function Cart() {
-  const totalQuantity = useSelector(
-    (state: RootState) => state.cartItems.totalQuantity
-  );
+  const totalQuantity = useSelector(getTotalQuantity);
   const productItems = useSelector((state: RootState) => state.cartItems.items);
 
   const translatedItemsArray = GetTranslatedItemsArray();

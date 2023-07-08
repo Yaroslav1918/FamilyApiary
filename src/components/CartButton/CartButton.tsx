@@ -10,12 +10,11 @@ import { useAppSelector } from "../../helpers/hooks";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { getTotalQuantity } from "../../redux/cart/cart_selectors";
 const { cart } = routes;
 
 const CartButton = () => {
-  const totalQuantity = useAppSelector(
-    (state) => state.cartItems.totalQuantity
-  );
+  const totalQuantity = useAppSelector(getTotalQuantity);
   const items = useSelector((state: RootState) => state.cartItems.items);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const isDesktopScreen = useMediaQuery("(min-width: 1200px)");

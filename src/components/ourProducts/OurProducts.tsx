@@ -16,7 +16,7 @@ export default function OurProducts({ sx }: OurProductsProps) {
   return (
     <Box component="section" sx={{ paddingTop: "90px", ...sx }}>
       <Container>
-        <Box component="div">
+
           <Typography
             component="h3"
             sx={{
@@ -38,7 +38,7 @@ export default function OurProducts({ sx }: OurProductsProps) {
           >
             {t("productsDesk")}
           </Box>
-        </Box>
+
         <SliderProducts itemsArr={products} addContent />
       </Container>
     </Box>

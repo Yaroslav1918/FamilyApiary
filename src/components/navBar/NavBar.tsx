@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu } from "@mui/icons-material";
-import { Box, Toolbar, List, Drawer, IconButton, AppBar } from "@mui/material";
+import { Box, Toolbar, List, Drawer, IconButton, AppBar, ListItem } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import styled from "@emotion/styled";
 import { Colors } from "../../styles";
@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import AuthList from "../authList/AuthList";
 import { useOutsideClick } from "../../helpers/outsideClick";
 import { getIsLoggedIn, getIsToken } from "../../redux/auth/auth-selectors";
+import FavoriteButton from "../favoriteButton";
 
 const { contactUs } = routes;
 
@@ -32,10 +33,12 @@ interface NavItem {
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const isLoggedIn = useAppSelector(getIsLoggedIn);
-    const token = useAppSelector(getIsToken);
+  const token = useAppSelector(getIsToken);
+  const showContent = useMediaQuery("(max-width:491px)");
   const { t } = useTranslation();
   const showAuthList = useMediaQuery("(min-width:500px)");
   const showUserMenu = useMediaQuery("(max-width:400px)");
+  const hideContent = useMediaQuery("(min-width:490px)");
   const handleDrawerToggle = () => {
     setMobileOpen((prev) => !prev);
   };
@@ -56,7 +59,7 @@ export default function NavBar() {
       ref={ref}
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <List sx={{ display: "flex", flexDirection: "column" }}>
+      <List sx={{ display: "flex", flexDirection: "column", paddingBottom: 0 }}>
         {navItems.map(
           (item) =>
             item.options && (
@@ -72,7 +75,18 @@ export default function NavBar() {
       {!showAuthList && !isLoggedIn && (
         <AuthList onCloseMenu={handleDrawerClose} flexDirection />
       )}
-      {showUserMenu && isLoggedIn && token && <UserMenu />}
+      <List sx={{ display: "flex", padding: 0 }}>
+        {showUserMenu && isLoggedIn && token && (
+          <ListItem>
+            <UserMenu />
+          </ListItem>
+        )}
+        {showContent && (
+          <ListItem>
+            <LngSwitcher />
+          </ListItem>
+        )}
+      </List>
     </Box>
   );
   return (
@@ -117,9 +131,10 @@ export default function NavBar() {
             alignItems: "center",
           }}
         >
+          {isLoggedIn && hideContent && <FavoriteButton />}
           <CartButton />
-          <LngSwitcher />
-          {(isLoggedIn && token) && !showUserMenu ? (
+          {hideContent && <LngSwitcher />}
+          {isLoggedIn && token && !showUserMenu ? (
             <UserMenu />
           ) : (
             <Box>{showAuthList && <AuthList />}</Box>

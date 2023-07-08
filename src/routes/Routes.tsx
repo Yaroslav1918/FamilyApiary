@@ -11,6 +11,7 @@ import SignIn from "../components/signIn/SignIn";
 import { useTranslation } from "react-i18next";
 import { AnimatePresence } from "framer-motion";
 import { OrderHistory } from "../components/orderHistory";
+import  WishList  from "../components/wishList";
 
 const {
   home,
@@ -22,6 +23,7 @@ const {
   signIn,
   cart,
   orderHistory,
+  wishList,
 } = routes;
 const RoutesComponent = () => {
   const { t } = useTranslation();
@@ -56,10 +58,8 @@ const RoutesComponent = () => {
           <Route path={cart.path} element={<CartPage />} />
           <Route path={signIn.path} element={<SignIn />} />
           <Route path={orderHistory.path} element={<OrderHistory />} />
+          <Route path={wishList.path} element={<WishList />} />
           <Route path={`/${t("product")}/:name`} element={<HoneyCard />} />
-
-          {/* NOT AUTH */}
-
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AnimatePresence>

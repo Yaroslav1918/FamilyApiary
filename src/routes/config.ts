@@ -56,4 +56,10 @@ export const routes = {
     titleUk: "Історія Замовлення",
     path: "/orderHistory",
   },
+  wishList: {
+    id: 9,
+    titleEn: "Wish List",
+    titleUk: "Список бажань",
+    path: "/wishList",
+  },
 };
