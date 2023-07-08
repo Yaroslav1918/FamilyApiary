@@ -22,23 +22,25 @@ export const OrderHistory = () => {
   const broughtProducts = useSelector(getBroughtProducts);
   const translatedItemsArray = GetTranslatedItemsArray();
   const { t } = useTranslation();
-  const translatedItems = Object.entries(broughtProducts).map(([date, boughtProduct]) => ({
-    [date]: boughtProduct.items.map((item) => {
-      const translatedProduct = translatedItemsArray.find(
-        (product) => product.id === item.id
-      );
-      const translatedText = translatedProduct?.text || item.text;
-      const translatedPrice = translatedProduct?.price || item.price;
-      const totalPrice = translatedPrice * item.quantity;
+  const translatedItems = Object.entries(broughtProducts).map(
+    ([date, boughtProduct]) => ({
+      [date]: boughtProduct.items.map((item) => {
+        const translatedProduct = translatedItemsArray.find(
+          (product) => product.id === item.id
+        );
+        const translatedText = translatedProduct?.text || item.text;
+        const translatedPrice = translatedProduct?.price || item.price;
+        const totalPrice = translatedPrice * item.quantity;
 
-      return {
-        ...item,
-        text: translatedText,
-        price: translatedPrice,
-        totalPrice: totalPrice,
-      };
-    }),
-  }));
+        return {
+          ...item,
+          text: translatedText,
+          price: translatedPrice,
+          totalPrice: totalPrice,
+        };
+      }),
+    })
+  );
 
   const isMobileScreen = useMediaQuery("(max-width:539px)");
   const cellStyle = {

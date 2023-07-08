@@ -57,7 +57,7 @@ export default function Shop() {
               sx={{
                 fontSize: { xs: 20, sm: 25 },
                 fontWeight: "600",
-                textAlign: { xs: "center", md : "left" },
+                textAlign: { xs: "center", md: "left" },
               }}
             >
               {t("categories")}

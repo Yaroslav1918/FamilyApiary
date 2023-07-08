@@ -43,12 +43,12 @@ export default function CartTotals() {
       totalPrice: totalPrice,
     };
   });
-const onCloseModal = () => {
-  setOpenModal(false);
-  isLoggedIn
-    ? dispatch(getAllSoldProducts())
-    : dispatch(cartActions.resetToInitialState());
-};
+  const onCloseModal = () => {
+    setOpenModal(false);
+    isLoggedIn
+      ? dispatch(getAllSoldProducts())
+      : dispatch(cartActions.resetToInitialState());
+  };
   const total = productItems.reduce((acc, { quantity, id }) => {
     const product = translatedItemsArray.find((p) => p.id === id);
     if (product) {
@@ -56,7 +56,7 @@ const onCloseModal = () => {
     }
     return acc;
   }, 0);
-  
+
   return (
     <Box width="100%" mx="auto" mt={4}>
       <Typography

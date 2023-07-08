@@ -8,7 +8,10 @@ type AuthListProps = {
   flexDirection?: Boolean;
 };
 const { signIn, signUp } = routes;
-export default function AuthList({ onCloseMenu, flexDirection }: AuthListProps) {
+export default function AuthList({
+  onCloseMenu,
+  flexDirection,
+}: AuthListProps) {
   const { t } = useTranslation();
   return (
     <List

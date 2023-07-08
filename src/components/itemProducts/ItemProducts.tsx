@@ -20,10 +20,7 @@ import {
   removeProductFromWishlist,
 } from "../../redux/cart/cart_operations";
 import { getWishListProducts } from "../../redux/cart/cart_selectors";
-import {
-  Favorite,
-  FavoriteBorder,
-} from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 export interface ItemProductsProps {
   id: number;
   image: string;

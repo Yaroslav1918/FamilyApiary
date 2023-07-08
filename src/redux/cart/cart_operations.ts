@@ -1,8 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 import axios from "axios";
 import { AxiosResponse } from "axios";
-// import { incrementTotalQuantity, incrementItemQuantity, updateItemTotalPrice, addItem } from './cart_slice';
 import { RootState } from "../store";
 import { createAction } from "@reduxjs/toolkit";
 
@@ -135,11 +133,9 @@ export const getAllWishProducts = createAsyncThunk(
   }
 );
 
-
 export const addToWishlistAsync = createAsyncThunk(
   "products/addToWishlistAsync",
   async (product: CartItem, thunkAPI) => {
-    
     const state = thunkAPI.getState() as RootState;
     try {
       const { id, price, quantity, image, totalPrice, text } = product;
@@ -172,15 +168,14 @@ export const addToWishlistAsync = createAsyncThunk(
         });
       }
 
-      const updatedTotalQuantity =
-        state.cartItems.wishTotalQuantity + quantity;
+      const updatedTotalQuantity = state.cartItems.wishTotalQuantity + quantity;
 
       const updatedCartItems = {
         wishlist: updatedItems,
         wishTotalQuantity: updatedTotalQuantity,
         totalQuantity: state.cartItems.totalQuantity,
       };
-     
+
       const { data } = await axios.post<any, AxiosResponse<CartState>>(
         "/api/products/wishlist",
         updatedCartItems
@@ -190,10 +185,8 @@ export const addToWishlistAsync = createAsyncThunk(
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
-
   }
 );
-
 
 export const removeProductFromWishlist = createAsyncThunk(
   "products/removeProductFromWishlist",

@@ -1,4 +1,3 @@
-import { OrderHistory } from './../components/orderHistory/OrderHistory';
 
 export const routes = {
   home: {

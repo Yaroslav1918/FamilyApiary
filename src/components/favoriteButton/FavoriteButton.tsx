@@ -10,7 +10,7 @@ const { wishList } = routes;
 
 const FavoriteButton = () => {
   const totalQuantity = useAppSelector(getWishtTotalQuantity);
- 
+
   return (
     <Button component={Link} to={wishList.path} sx={{ color: Colors.black }}>
       <Badge showZero badgeContent={totalQuantity} color="error">

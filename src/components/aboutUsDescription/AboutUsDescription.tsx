@@ -74,7 +74,6 @@ export default function AboutUsDescription() {
                 fontSize: { xs: 16, sm: 18, md: 19 },
                 "&::first-letter": {
                   color: Colors.orange,
-                 
                 },
               }}
               mb={5}

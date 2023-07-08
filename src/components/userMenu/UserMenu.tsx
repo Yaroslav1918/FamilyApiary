@@ -37,9 +37,9 @@ const UserMenu = () => {
   const handleClickToOrderHistory = () => {
     navigate(orderHistory.path);
   };
-    const handleClickToWishList = () => {
-      navigate(wishList.path);
-    };
+  const handleClickToWishList = () => {
+    navigate(wishList.path);
+  };
 
   const username = useAppSelector((state) => state.auth.user?.name ?? "");
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

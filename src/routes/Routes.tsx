@@ -7,11 +7,10 @@ import OurGallery from "../components/ourGallery";
 import HoneyCard from "../components/honeyCard";
 import SignUp from "../components/signUp";
 import SignIn from "../components/signIn/SignIn";
-
 import { useTranslation } from "react-i18next";
 import { AnimatePresence } from "framer-motion";
 import { OrderHistory } from "../components/orderHistory";
-import  WishList  from "../components/wishList";
+import WishList from "../components/wishList";
 
 const {
   home,

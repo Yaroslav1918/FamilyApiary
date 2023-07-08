@@ -82,7 +82,7 @@ export default function CartItem({ items, hideContent, style }: Props) {
                     <CardMedia
                       component="img"
                       image={image}
-                      alt ={text}
+                      alt={text}
                       sx={{
                         width: "50px",
                         height: "50px",

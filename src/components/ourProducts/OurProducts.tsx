@@ -16,28 +16,27 @@ export default function OurProducts({ sx }: OurProductsProps) {
   return (
     <Box component="section" sx={{ paddingTop: "90px", ...sx }}>
       <Container>
-
-          <Typography
-            component="h3"
-            sx={{
-              fontSize: { md: 40, xs: 20, sm: 30 },
-              fontWeight: "600",
-              textAlign: "center",
-            }}
-          >
-            {t("ourProducts")}
-          </Typography>
-          <Box
-            component="p"
-            sx={{
-              fontSize: { md: 20, xs: 15, sm: 19 },
-              fontWeight: "500",
-              mb: 5,
-              textAlign: "center",
-            }}
-          >
-            {t("productsDesk")}
-          </Box>
+        <Typography
+          component="h3"
+          sx={{
+            fontSize: { md: 40, xs: 20, sm: 30 },
+            fontWeight: "600",
+            textAlign: "center",
+          }}
+        >
+          {t("ourProducts")}
+        </Typography>
+        <Box
+          component="p"
+          sx={{
+            fontSize: { md: 20, xs: 15, sm: 19 },
+            fontWeight: "500",
+            mb: 5,
+            textAlign: "center",
+          }}
+        >
+          {t("productsDesk")}
+        </Box>
 
         <SliderProducts itemsArr={products} addContent />
       </Container>

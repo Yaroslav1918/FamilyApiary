@@ -1,18 +1,7 @@
 import { useState } from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  List,
-  Grid,
-  IconButton,
-  ListItem,
-  Button,
-} from "@mui/material";
+import { Box, Container, Typography, List, Grid, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SelectAllIcon from "@mui/icons-material/SelectAll";
 import {
   getWishListProducts,
   getWishtTotalQuantity,
@@ -39,13 +28,13 @@ export default function WishList() {
 
   const wishtTotalQuantity = useSelector(getWishtTotalQuantity);
 
- const total = wishList.reduce((acc, { quantity, id }) => {
-   const product = translatedItemsArray.find((p) => p.id === id);
-   if (product) {
-     return acc + quantity * product.price;
-   }
-   return acc;
- }, 0);
+  const total = wishList.reduce((acc, { quantity, id }) => {
+    const product = translatedItemsArray.find((p) => p.id === id);
+    if (product) {
+      return acc + quantity * product.price;
+    }
+    return acc;
+  }, 0);
 
   const onCloseModal = () => {
     setOpenModal(false);
@@ -139,7 +128,7 @@ export default function WishList() {
                   component="p"
                   sx={{
                     margin: "0px",
-                    marginRight: "15px", 
+                    marginRight: "15px",
                     fontSize: { xs: "15px", md: "18px" },
                   }}
                 >

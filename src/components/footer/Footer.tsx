@@ -78,7 +78,14 @@ export default function Footer() {
 
             <List>
               {products.map(({ text, id }) => (
-                <ListItem key ={id} sx ={{display: "flex", justifyContent:"center", alignItems: "center"}}>
+                <ListItem
+                  key={id}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <StyledLink to={`/${t("product")}/${text}`}>
                     {" "}
                     {text}

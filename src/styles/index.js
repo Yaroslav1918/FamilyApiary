@@ -24,37 +24,7 @@ export const Colors = {
   googleBack: "#7697f9",
 };
 
-// TODO: define overrides object to create theme
 
-// TODO: use overrides object to create theme
-
-const overrides = {
-  MuiIconButton: {
-    root: {
-      "&:hover": {
-        backgroundColor: Colors.primary,
-      },
-    },
-  },
-  MuiButton: {
-    root: {
-      borderRadius: 8,
-      textTransform: "none",
-      fontWeight: 600,
-      "&:hover": {
-        backgroundColor: Colors.primary,
-      },
-    },
-    containedPrimary: {
-      backgroundColor: Colors.primary,
-      color: Colors.white,
-      "&:hover": {
-        backgroundColor: Colors.dark,
-      },
-    },
-  },
-  // Add more overrides as needed
-};
 
 const myTheme = createTheme({
   palette: {
@@ -71,9 +41,8 @@ const myTheme = createTheme({
   text: {
     primary: Colors.black,
   },
- 
 });
 
 export default myTheme;
 
-// export default theme;
+

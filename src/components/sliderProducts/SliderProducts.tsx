@@ -1,10 +1,6 @@
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
-import {
-  Button,
-  Card,
-  CardMedia,
-} from "@mui/material";
+import { Button, Card, CardMedia } from "@mui/material";
 import { Colors } from "../../styles";
 import GalleryModal from "../galleryModal/GalleryModal ";
 import { useState } from "react";
@@ -117,7 +113,7 @@ const SliderProducts = ({
               text={text}
               price={price}
               description={description}
-              quantity ={1}
+              quantity={1}
             />
           ))
         : itemsArr.map(({ id, image }) => (

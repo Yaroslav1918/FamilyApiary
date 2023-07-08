@@ -95,7 +95,6 @@ const cartSlice = createSlice({
       state.wishlist = payload.user.wishItems;
     });
 
-
     builder.addCase(getProducts.fulfilled, (state, { payload }) => {
       state.boughtProducts = payload[0].boughtProducts;
       state.items = payload[0].items;

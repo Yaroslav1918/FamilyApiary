@@ -41,7 +41,7 @@ export default function SignIn() {
   const isLoggedIn = useAppSelector((item) => item.auth.isLoggedIn);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  
+
   useEffect(() => {
     if (isLoggedIn && redirectToShop) {
       navigate(shop.path, { replace: true });

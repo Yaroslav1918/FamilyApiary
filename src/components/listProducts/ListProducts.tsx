@@ -22,7 +22,7 @@ export default function ListProducts({ products }: Props) {
         flexWrap: "wrap",
         borderLeft: "1px dotted grey",
         borderTop: "1px dotted grey",
-        padding: { xs: "0px", sm: "20px"},
+        padding: { xs: "0px", sm: "20px" },
       }}
     >
       {products.map(({ image, text, price, id }) => (
